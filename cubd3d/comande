@@ -1,0 +1,1 @@
+gcc -I /minilibx -lmlx -framework OpenGL -framework Appkit *c libft/*c get_next_line/*c 

@@ -1,0 +1,4 @@
+
+data ->px = distance entre perso et mur du fond 
+data -py = distance entre perso et mur de gauche 
+
