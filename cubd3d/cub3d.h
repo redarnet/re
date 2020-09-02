@@ -4,9 +4,6 @@
 #include "get_next_line/get_next_line.h"
 #include <math.h>
 #include "minilibx-linux/mlx.h"
-//#include "minilibx-linux/mlx_int.h"
-
-
 #define key_m 46
 #define key_w 97
 #define key_a 100
@@ -17,19 +14,45 @@
 typedef struct t_s
 {
 	int texture[6][64][64];
+	int size_l;
+	int i;
+	int x;
+	char *ptr;
+	int y;
+	int endian;
+	void *z;
 }	t_t;
 
 typedef struct sprite_s
 {
 	double posx;
 	double posy;
+	double spritex;
+	double spritey;
+	double invdet;
+	double transformx;
+	double transformy;
+	int spritescreenx;
+	int spriteheight;
+	int drawstarty;
+	int drawendy;
+	int spritewidth;
+	int drawstartx;
+	int drawendx;
+	int stripe;
+	int texx;
+	int y;
+	int d;
+	int texy;
+	int color2;
+
 }	sprite_t;
 
 
 typedef struct data_s
 {
 	sprite_t *sprite;
-//	struct sprite_s;
+	//	struct sprite_s;
 	int buffer[500][500];
 	double ZBuffer[500];
 
@@ -64,10 +87,7 @@ typedef struct data_s
 	int cmpr;
 	void *img_ptr;
 	int *img_data;
-	char *text_nord;
-	char *text_sud;
-	char *text_west;
-	char *text_est;
+	char *text_nord[5];
 	int side;
 	float dirX;
 	float dirY;
@@ -81,6 +101,13 @@ typedef struct data_s
 	float perwall;
 	int bpp;
 	int numsprite;
+	float sidedirx;
+	float sidediry;
+	int stepx;
+	int stepy;
+	float deltadirx;
+	float deltadiry;
+
 }		data_t;
 
 
@@ -89,7 +116,7 @@ int deal_key_map(int key, data_t *data);
 void	algo(data_t *data, int pix, double dirX, double dirY);
 void	algo2(data_t *data);
 int	afficher_mur(int key,data_t *data);
-void	ft_sprite(struct data_s data, int color, double *ZBuffer, int *img);
+void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2);
 void	remplir_blanc(struct data_s data);
 void	move_player(int nb, data_t *data);
 double abss(double a);

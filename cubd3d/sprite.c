@@ -1,100 +1,123 @@
 #include "cub3d.h"
-int *sortSprites(struct data_s data, int *sprite_order, double *sprite_distance, int sprite_nb)
-{
-        int i;
-        int tmp_order;
-        double tmp_dist;
 
-for (int i = 0; i < data.numsprite; i++)
+int	*sortSprites(struct data_s data, int *sprite_order,
+		double *sprite_distance, int sprite_nb)
 {
-sprite_order[i] = i;
-      sprite_distance[i] = ((data.px - data.sprite[i].posy) * (data.px - data.sprite[i].posy) + (data.py - data.sprite[i].posx) * (data.py - data.sprite[i].posx)); //sqrt not taken, unneeded
-    }
-        i = 0;
-        while (i < sprite_nb - 1)
-        {
-                if (sprite_distance[i] > sprite_distance[i + 1])
-                {
-                        tmp_dist = sprite_distance[i];
-                        sprite_distance[i] = sprite_distance[i + 1];
-                        sprite_distance[i + 1] = tmp_dist;
-                        tmp_order = sprite_order[i];
-                        sprite_order[i] = sprite_order[i + 1];
-                        sprite_order[i + 1] = tmp_order;
-                        i = -1;
-                }
-                i++;
-        }
-        return sprite_order;
+	int		i;
+	int		tmp_order;
+	double	tmp_dist;
+
+	i = 0;
+	while (i < data.numsprite)
+	{
+		sprite_order[i] = i;
+		sprite_distance[i] = ((data.px - data.sprite[i].posy) *
+			(data.px - data.sprite[i].posy) + (data.py - data.sprite[i].posx)
+			* (data.py - data.sprite[i].posx));
+		i++;
+	}
+	i = 0;
+	while (i < sprite_nb - 1)
+	{
+		if (sprite_distance[i] > sprite_distance[i + 1])
+		{
+			tmp_dist = sprite_distance[i];
+			sprite_distance[i] = sprite_distance[i + 1];
+			sprite_distance[i + 1] = tmp_dist;
+			tmp_order = sprite_order[i];
+			sprite_order[i] = sprite_order[i + 1];
+			sprite_order[i + 1] = tmp_order;
+			i = -1;
+		}
+		i++;
+	}
+	return (sprite_order);
 }
 
-double abss(double a)
+double	abss(double a)
 {
-        if (a < 0)
-                a = -a;
-        return a;
+	if (a < 0)
+		a = -a;
+	return (a);
 }
 
-
-void  ft_sprite(struct data_s data, int color, double *ZBuffer, int *img)
+void	ft_sprite2(struct data_s data, struct sprite_s sprite,
+		double *zbuffer, int *img_data2)
 {
-	int h;
-	int texHeight = 64;
-	int texWidth = 64;
-	int *spriteOrder;
-	double spriteDistance[data.numsprite];
-	int buffer[500][500];
-	struct sprite_s *sprite;
+	int y;
+	int d;
+	int texheight;
+	int texwidth;
 	t_t text;
-	h = data.y;
+
+	texheight = 64;
+	texwidth = 64;
 	text = textures(&data);
-spriteOrder = (int*)malloc(sizeof(int) * data.numsprite + 1);
+	while (sprite.stripe < sprite.drawendx)
+	{
+		sprite.texx = (int)(256 * (sprite.stripe - (-sprite.spritewidth / 2 +
+			sprite.spritescreenx)) * texwidth / sprite.spritewidth) / 256;
+		y = sprite.drawstarty;
+		if (sprite.transformy > 0 && sprite.stripe > 0 && 
+			sprite.stripe < data.x && sprite.transformy < zbuffer[sprite.stripe])
+		while (y < sprite.drawendy)
+		{
+			d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
+			sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
+			sprite.color2 = text.texture[4][0][texwidth *
+				sprite.texy + sprite.texx];
+			if ((sprite.color2 & 0x00FFFFFF) != 0)
+				img_data2[y * 500 + sprite.stripe] = sprite.color2;
+			y++;
+		}
+		sprite.stripe++;
+	}
+}
 
-   spriteOrder =  sortSprites(data, spriteOrder, spriteDistance, 5);
-        
-   
-        int w;
-        w  = data.x;
-        int i;
-        i = 0;
-
-for ( i = data.numsprite ; i >= 0  ; i--)
+void ft_sprite1(struct data_s data, struct sprite_s *sprite)
 {
-        double spriteX = data.sprite[spriteOrder[i]].posy - data.px;
-        double spriteY = data.sprite[spriteOrder[i]].posx - data.py;
-      double invDet = 1.0 / (data.planeX * data.dirY - data.dirX * data.planeY); 
+	sprite->spriteheight = abss((int)((data.y / (sprite->transformy))));
+	sprite->drawstarty = -sprite->spriteheight / 2 + data.y / 2;
+	if (sprite->drawstarty < 0)
+		sprite->drawstarty = 0;
+	sprite->drawendy = sprite->spriteheight / 2 + data.y / 2;
+	if (sprite->drawendy >= data.y)
+		sprite->drawendy = data.y - 1;
+	sprite->spritewidth = abss((int)((data.y / (sprite->transformy)))) / 2;
+	sprite->drawstartx = -sprite->spritewidth / 2 + sprite->spritescreenx;
+	if (sprite->drawstartx < 0)
+		sprite->drawstartx = 0;
+	sprite->drawendx = sprite->spritewidth / 2 + sprite->spritescreenx;
+	if (sprite->drawendx >= data.x)
+		sprite->drawendx = data.x - 1;
+	sprite->stripe = sprite->drawstartx;
+}
 
-      double transformX = invDet * (data.dirY * spriteX - data.dirX * spriteY);
-      double transformY = invDet * (-data.planeY * spriteX + data.planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
+{
+	int	i;
+	int	*spriteorder;
+	struct sprite_s	sprite;
+	double		spritedistance[data.numsprite];
 
-      int spriteScreenX = (int)((w / 2) * (1 + transformX / transformY));
-
-      int spriteHeight = abss((int)((h / (transformY)))) ; //using 'transformY' instead of the real distance prevents fisheye
-      int drawStartY = -spriteHeight / 2 + h / 2 ;
-      if(drawStartY < 0) drawStartY = 0;
-      int drawEndY = spriteHeight / 2 + h / 2 ;
-      if(drawEndY >= h) drawEndY = h - 1;
-      int spriteWidth = abss((int)((h / (transformY)))) / 2;
-      int drawStartX = -spriteWidth / 2 + spriteScreenX ;
-      if(drawStartX < 0) drawStartX = 0;
-      int drawEndX = spriteWidth / 2 + spriteScreenX;
-      if(drawEndX >= w) drawEndX = w - 1;
-      for(int stripe = drawStartX; stripe < drawEndX; stripe++)
-      {
-        int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 256;
-        for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
-        {
-          int d = (y) * 256 - h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-          int texY = ((d * texHeight) / spriteHeight) / 256;
-          int  color2 = text.texture[4][0][texWidth * texY + texX]; //get current color from the texture
-
-          if((color2 & 0x00FFFFFF) != 0) 
-                data.img_data[y*500 + stripe] = color2;
-          if((color & 0x00FFFFFF) != 0) data.buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
-      }
-        }
-      mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img_ptr,0 , 0);
-     }
-	
+	spriteorder = (int*)malloc(sizeof(int) * data.numsprite + 1);
+	spriteorder = sortSprites(data, spriteorder, spritedistance, 5);
+	i = data.numsprite;
+	while (i >= 0)
+	{
+		sprite.spritex = data.sprite[spriteorder[i]].posy - data.px;
+		sprite.spritey = data.sprite[spriteorder[i]].posx - data.py;
+		sprite.invdet = 1.0 / (data.planeX *
+				data.dirY - data.dirX * data.planeY);
+		sprite.transformx = sprite.invdet *
+			(data.dirY * sprite.spritex - data.dirX * sprite.spritey);
+		sprite.transformy = sprite.invdet *
+			(-data.planeY * sprite.spritex + data.planeX * sprite.spritey);
+		sprite.spritescreenx = (int)((data.x / 2) *
+				(1 + sprite.transformx / sprite.transformy));
+		ft_sprite1(data, &sprite);
+		ft_sprite2(data, sprite, zbuffer, img_data2);
+		i--;
+	}
 }
 

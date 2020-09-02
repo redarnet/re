@@ -6,7 +6,7 @@
 /*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:35:05 by redarnet          #+#    #+#             */
-/*   Updated: 2020/03/12 14:46:18 by redarnet         ###   ########.fr       */
+/*   Updated: 2020/09/01 16:19:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	move_player(int nb, data_t *data)
 //	data->map2[y][x] = 'p' - 48;
 }
 
-
 void	rotate(int key, data_t *data)
 {
 	if ( key == key_a)
@@ -45,5 +44,3 @@ void	rotate(int key, data_t *data)
 	if ( key == key_d)
 		data->angle -= data->rotate;
 }
-
-

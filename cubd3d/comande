@@ -1,1 +1,3 @@
 gcc -I /minilibx -lmlx -framework OpenGL -framework Appkit *c libft/*c get_next_line/*c 
+gcc *c get_next_line/*c  libft/*c -lXext -lX11 -lm -lbsd libmlx.a libmlx_Linux.a
+

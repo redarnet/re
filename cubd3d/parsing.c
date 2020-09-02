@@ -6,7 +6,7 @@
 /*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:55:43 by redarnet          #+#    #+#             */
-/*   Updated: 2020/03/04 13:23:26 by redarnet         ###   ########.fr       */
+/*   Updated: 2020/07/17 20:55:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,23 +101,24 @@ void   pars(data_t *data, char *line)
 	if (line[0] == 'R')
 		data->x = split(line, &data->y);
 	else if (line[0] == 'N') 
-		data->text_nord =  ft_strsub(line);
+		data->text_nord[0] =  ft_strsub(line);
 	else if (line[0] == 'S') 
 	{
 		if (line[1] == '0') 
 			;
 		else
-		data->text_sud =  ft_strsub(line);
+		data->text_nord[1] =  ft_strsub(line);
 	}
 	else if (line[0] == 'W') 
-		data->text_west =  ft_strsub(line);
+		data->text_nord[2] =  ft_strsub(line);
 	else if (line[0] == 'E') 
-		data->text_est =  ft_strsub(line);
+		data->text_nord[3] =  ft_strsub(line);
 	else if (line[0] == 'F')
 		data->couleur_sol = parse_s_p(line);
 	else if (line[0] == 'C')
 		data->couleur_plafond = parse_s_p(line);
 		;
+	data->text_nord[4] =  "textures/barrel.xpm";
 
 }
 
