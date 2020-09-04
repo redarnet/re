@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/*
 void	move_player(int nb, data_t *data)
 {
 	float tmpx;
@@ -44,3 +44,4 @@ void	rotate(int key, data_t *data)
 	if ( key == key_d)
 		data->angle -= data->rotate;
 }
+*/

@@ -5,10 +5,12 @@
 #include <math.h>
 #include "minilibx-linux/mlx.h"
 #define key_m 46
-#define key_w 97
-#define key_a 100
-#define key_d 119
+#define key_fd 65363
+#define key_fg 65361
+#define key_a 97
 #define key_s 115
+#define key_w 119
+#define key_d 100
 
 
 typedef struct t_s
@@ -55,8 +57,8 @@ typedef struct data_s
 	//	struct sprite_s;
 	int buffer[500][500];
 	double ZBuffer[500];
-
 	int texNum;
+	int walldir;
 	double texPos;
 	int texX;
 	void 	*mlx_ptr;
@@ -107,9 +109,11 @@ typedef struct data_s
 	int stepy;
 	float deltadirx;
 	float deltadiry;
+	int *d_ad;
+	int sl;
+	int sreenshot;
 
 }		data_t;
-
 
 t_t textures(data_t *data);
 int deal_key_map(int key, data_t *data);

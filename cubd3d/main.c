@@ -52,10 +52,8 @@ void	pos_perso(struct data_s *data)
 				data->py = x + 1;
 				data->px = y + 1;
 			}
-			ft_putchar_fd(data->map[y][x], 1);
 			x++;
 		}
-		ft_putchar_fd('\n', 1);
 		y++;
 	}
 }
@@ -98,13 +96,10 @@ int	**change_map(char **map)
 			str[x + 1][z + 1] = map[x][z] - 48;
 			if (str[x + 1][z + 1] == 'p' - 48)
 				str[x + 1][z + 1] = 0;
-			if (x == 0)
-				str[x + 1][z + 1] = 3;
 			if (x == i - 1)
 				str[x + 1][z + 1] = 1;
 			z++;
 		}
-		str[x + 1][z - 1] = 2;
 		x++;
 	}
 	return (str);

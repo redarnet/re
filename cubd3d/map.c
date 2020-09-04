@@ -12,43 +12,66 @@
 
 #include "cub3d.h"
 
-void	deal_key_map2(int key, data_t *data)
+int move_pos(int pos)
+{
+	if (pos == 1 || pos == 4)
+		return (0);
+	return (1);
+}
+
+void	move(int key, data_t *data)
 {
 	double movespeed;
 	double rotspeed;
 
-	movespeed = 0.07;
+	movespeed = 0.2;
 	rotspeed = 0.06;
-	if (key == key_w)
+	if (key == key_a)
 	{
-		if (data->map2[(int)(data->px + data->dirX
-		* movespeed)][(int)(data->py)] < 1)
-			data->px += data->dirX * movespeed;
-		if (data->map2[(int)(data->px)][(int)(data->py + data->dirY
-		* movespeed)] < 1)
-			data->py += data->dirY * movespeed;
+		if (move_pos(data->map2[(int)(data->px + data->dirX
+		* movespeed)][(int)(data->py)]))
+			data->px += data->dirX * movespeed *0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->dirY
+		* movespeed)]))
+			data->py += data->dirY * movespeed *0.5;
 	}
 	if (key == key_s)
 	{
-		if (data->map2[(int)(data->px - data->dirX
-		* movespeed)][(int)(data->py)] < 1)
-			data->px -= data->dirX * movespeed;
-		if (data->map2[(int)(data->px)][(int)(data->py - data->dirY
-		* movespeed)] < 1)
-			data->py -= data->dirY * movespeed;
+		if (move_pos(data->map2[(int)(data->px - data->dirX
+		* movespeed)][(int)(data->py)]))
+			data->px -= data->dirX * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->dirY
+		* movespeed)]))
+			data->py -= data->dirY * movespeed * 0.5;
+	}
+	if (key == key_w)
+	{
+		if (move_pos(data->map2[(int)(data->px - data->dirY
+		* movespeed)][(int)(data->py)]))
+			data->px -= data->dirY * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->dirX
+		* movespeed)]))
+			data->py += data->dirX * movespeed * 0.5;
+	}
+	if (key == key_d)
+	{
+		if (move_pos(data->map2[(int)(data->px + data->dirY
+		* movespeed)][(int)(data->py)]))
+			data->px += data->dirY * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->dirX
+		* movespeed)]))
+			data->py -= data->dirX * movespeed * 0.5;
 	}
 }
 
-void deal_key_map3(int key, data_t *data)
+void rotate(int key, data_t *data)
 {
-	double movespeed;
 	double rotspeed;
 	double olddirx;
 	double oldplanex;
 
-	movespeed = 0.07;
-	rotspeed = 0.06;
-	if (key == key_d)
+	rotspeed = 0.2;
+	if (key == key_fd)
 	{
 		olddirx = data->dirX;
 		data->dirX = data->dirX * cos(-rotspeed) - data->dirY * sin(-rotspeed);
@@ -59,23 +82,7 @@ void deal_key_map3(int key, data_t *data)
 		data->planeY = oldplanex * sin(-rotspeed) +
 				data->planeY * cos(-rotspeed);
 	}
-}
-
-int	deal_key_map(int key, data_t *data)
-{
-	double movespeed;
-	double rotspeed;
-	double olddirx;
-	double oldplanex;
-
-	//remplir_blanc(*data);
-	//plafond(data);
-	// afficher_mur(5, data);
-	movespeed = 0.07;
-	rotspeed = 0.06;
-	deal_key_map2(key, data);
-	deal_key_map3(key, data);
-	if (key == key_a)
+	if (key == key_fg)
 	{
 		olddirx = data->dirX;
 		data->dirX = data->dirX * cos(rotspeed) - data->dirY * sin(rotspeed);
@@ -85,6 +92,16 @@ int	deal_key_map(int key, data_t *data)
 				data->planeY * sin(rotspeed);
 		data->planeY = oldplanex * sin(rotspeed) + data->planeY * cos(rotspeed);
 	}
+}
+
+int	deal_key_map(int key, data_t *data)
+{
+
+	//remplir_blanc(*data);
+	//plafond(data);
+	// afficher_mur(5, data);
+	move(key, data);
+	rotate(key, data);
 	ft_draw_walls(*data, key);
 	return (0);
 }
