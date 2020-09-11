@@ -73,9 +73,9 @@ void	ft_draw_walls(struct data_s data, int key)
 	texheight = 64;
 	text = textures(&data);
 	zbuffer = (double*)malloc(sizeof(double) * 500 + 1);
-//	plafond(&data);
-//	sol(&data);
+	plafond(&data);
+	sol(&data);
 	ft_algo(data, data.img_data, texheight, zbuffer);
-	ft_sprite(data, zbuffer, data.img_data);
+	ft_sprite(data, zbuffer, data.img_data, text);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img_ptr, 0, 0);
 }

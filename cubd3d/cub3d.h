@@ -4,6 +4,9 @@
 #include "get_next_line/get_next_line.h"
 #include <math.h>
 #include "minilibx-linux/mlx.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #define key_m 46
 #define key_fd 65363
 #define key_fg 65361
@@ -25,6 +28,20 @@ typedef struct t_s
 	void *z;
 }	t_t;
 
+typedef struct	s_bmp
+{
+	char		magic[3];
+	int			size_file;
+	int			app_spe;
+	int			data_offset;
+	int			size_dib;
+	int			w;
+	int			h;
+	short int	planes;
+	short int	bpp;
+	int			*data_ptr;
+	double		padding_trash;
+}				t_bmp;
 typedef struct sprite_s
 {
 	double posx;
@@ -118,13 +135,15 @@ typedef struct data_s
 t_t textures(data_t *data);
 int deal_key_map(int key, data_t *data);
 void	algo(data_t *data, int pix, double dirX, double dirY);
+void    ft_algo(struct data_s data, int *img_data2 , int texheight, double *zbuffer); 
 void	algo2(data_t *data);
 int	afficher_mur(int key,data_t *data);
-void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2);
+void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2, struct t_s text);
 void	remplir_blanc(struct data_s data);
 void	move_player(int nb, data_t *data);
 double abss(double a);
-int *sortSprites(struct data_s data, int *sprite_order, double *sprite_distance, int sprite_nb);
+void save_bmp(struct data_s data);
+//int *sortSprites(struct data_s data, int *sprite_order, double *sprite_distance, int sprite_nb);
 void	rotate(int key, data_t *data);
 void	ft_affiche_map(data_t *data);
 int	affiche_bousole(int key, data_t *data);
@@ -138,4 +157,6 @@ int rgb_hex(int red, int green, int blue);
 char *ft_itoa_base(int nb, char *str);
 void	plafond(struct data_s *data);
 void	sol(struct data_s *data);
+void    move(int key, data_t *data);
+int ft_quit(data_t *data);
 

@@ -48,6 +48,7 @@ int 	parse_s_p(char *line)
 	red = 0;
 	green = 0;
 	blue = 0;
+	i = 1;
 	while(line[i] == ' ')
 		i++;
 	while (line[i] >= '0' &&line[i] <= '9')
@@ -55,6 +56,7 @@ int 	parse_s_p(char *line)
 		red = red * 10 - '0' + line[i];
 		i++;
 	}
+	ft_putnbr_fd(red, 1);
 	i++;
 	while (line[i] >= '0' &&line[i] <= '9')
 	{
@@ -70,7 +72,6 @@ int 	parse_s_p(char *line)
 	x = rgb_hex(red, green, blue);
 	return x;
 }
-
 
 
 char *ft_strsub(char *line)

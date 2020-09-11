@@ -12,26 +12,6 @@
 
 #include "cub3d.h"
 
-void	remplir_blanc(struct data_s data)
-{
-	int i;
-	int y;
-
-	i = 0;
-	y = 0;
-	while (i != data.y)
-	{
-		y = 0;
-		while (y != data.x)
-		{
-			mlx_pixel_put(data.mlx_ptr,
-			data.win_ptr, y, i, data.couleur_plafond);
-			y++;
-		}
-		i++;
-	}
-}
-
 void	pos_perso(struct data_s *data)
 {
 	int x;
@@ -60,6 +40,7 @@ void	pos_perso(struct data_s *data)
 
 int	ft_quit(data_t *data)
 {
+	ft_putstr_fd("o", 1);
 	exit(5);
 	return (0);
 }
@@ -134,7 +115,7 @@ void	tex_sprite(data_t *data)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	data_t	data;
 	int	i;
@@ -155,15 +136,21 @@ int	main(void)
 	pos_perso(&data);
 	tex_sprite(&data);
 	data.map2 = change_map(data.map);
+	if (argc == 2 && !ft_strncmp(argv[1],"--save",6 ))
+		save_bmp(data);
+	else
+	{
 	if (data.x > 2580)
 		data.x = 2580;
 	if (data.y > 1400)
 		data.y = 1400;
 	data.mlx_ptr = mlx_init(&data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.x, data.y, "Cubd3d");
+	deal_key_map(97, &data);
 	mlx_hook(data.win_ptr, 2, (1L << 0), &deal_key_map, &data);
-	mlx_hook(data.win_ptr, 17, (1L << 17), *ft_quit, &data);
+//	mlx_hook(data.win_ptr, 17, (1L << 17), *ft_quit, &data);
 	mlx_loop(data.mlx_ptr);
 	free(data.map);
+	}
 	return (0);
 }

@@ -96,10 +96,8 @@ void rotate(int key, data_t *data)
 
 int	deal_key_map(int key, data_t *data)
 {
-
-	//remplir_blanc(*data);
-	//plafond(data);
-	// afficher_mur(5, data);
+	if (key == 65307)
+		ft_quit(data);
 	move(key, data);
 	rotate(key, data);
 	ft_draw_walls(*data, key);

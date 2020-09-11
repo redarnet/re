@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	*sortSprites(struct data_s data, int *sprite_order,
+static int	*sortSprites(struct data_s data, int *sprite_order,
 		double *sprite_distance, int sprite_nb)
 {
 	int		i;
@@ -42,17 +42,15 @@ double	abss(double a)
 }
 
 void	ft_sprite2(struct data_s data, struct sprite_s sprite,
-		double *zbuffer, int *img_data2)
+		double *zbuffer, int *img_data2, struct t_s text)
 {
 	int y;
 	int d;
 	int texheight;
 	int texwidth;
-	t_t text;
 
 	texheight = 64;
 	texwidth = 64;
-	text = textures(&data);
 	while (sprite.stripe < sprite.drawendx)
 	{
 		sprite.texx = (int)(256 * (sprite.stripe - (-sprite.spritewidth / 2 +
@@ -93,15 +91,15 @@ void ft_sprite1(struct data_s data, struct sprite_s *sprite)
 	sprite->stripe = sprite->drawstartx;
 }
 
-void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
+void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2, struct t_s text)
 {
 	int	i;
 	int	*spriteorder;
 	struct sprite_s	sprite;
 	double		spritedistance[data.numsprite];
 
-	spriteorder = (int*)malloc(sizeof(int) * data.numsprite + 1);
-	spriteorder = sortSprites(data, spriteorder, spritedistance, 5);
+	spriteorder = (int*)malloc(sizeof(double) * data.numsprite + 1);
+	spriteorder = sortSprites(data, spriteorder, spritedistance, data.numsprite);
 	i = data.numsprite;
 	while (i >= 0)
 	{
@@ -116,7 +114,7 @@ void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
 		sprite.spritescreenx = (int)((data.x / 2) *
 				(1 + sprite.transformx / sprite.transformy));
 		ft_sprite1(data, &sprite);
-		ft_sprite2(data, sprite, zbuffer, img_data2);
+		ft_sprite2(data, sprite, zbuffer, img_data2, text);
 		i--;
 	}
 }
