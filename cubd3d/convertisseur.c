@@ -35,6 +35,8 @@ int	rgb_hex(int red, int green, int blue)
 	char	*end;
 	int		x;
 
+	if (red > 255 || blue > 255 || green > 255)
+		ft_error("couleur range");
 	red2 = ft_itoa_base(red, "0123456789ABCDEF");
 	green2 = ft_itoa_base(green, "0123456789ABCDEF");
 	blue2 = ft_itoa_base(blue, "0123456789ABCDEF");

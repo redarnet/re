@@ -56,7 +56,7 @@ void	ft_algo(struct data_s data, int *img_data2,
 			texy = zo;
 			data.texPos += data.step;
 			color = text.texture[data.walldir][0][texheight * texy + data.texX];
-			img_data2[data.y2 * 500 + pix] = color;
+			img_data2[data.y2 * data.x + pix] = color;
 			data.y2++;
 		}
 		zbuffer[pix] = data.perwall;
@@ -72,7 +72,7 @@ void	ft_draw_walls(struct data_s data, int key)
 
 	texheight = 64;
 	text = textures(&data);
-	zbuffer = (double*)malloc(sizeof(double) * 500 + 1);
+	zbuffer = (double*)malloc(sizeof(double) * data.x + 1);
 	plafond(&data);
 	sol(&data);
 	ft_algo(data, data.img_data, texheight, zbuffer);

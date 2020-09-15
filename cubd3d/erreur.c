@@ -12,46 +12,9 @@
 
 #include "cub3d.h"
 
-void	ft_error(void)
+void	ft_error(char *str)
 {
-	ft_putstr_fd("error\n", 1);
+	ft_putstr_fd("Error\n", 1);
+	ft_putstr_fd(str, 1);
 	exit(5);
-}
-
-void	error_map2(char **str, int y)
-{
-	int i;
-	i = 0;
-	while (str[y - 1][i] != '\0')
-	{
-		if (str[y - 1][i] != '1')
-			ft_error();
-		i++;
-	}
-}
-
-void	error_map(char **str)
-{
-	int i;
-	int y;
-
-	i = 0;
-	y = 0;
-	while (str[0][i] != '\0')
-	{
-		if (str[0][i] != '1')
-			ft_error();
-		i++;
-	}
-	i = 0;
-	while (str[y] != 0)
-	{
-		i = 0;
-		while (str[y][i] != '\0')
-			i++;
-		if (str[y][i - 1] != '1')
-			ft_error();
-		y++;
-	}
-	error_map2(str, y);
 }

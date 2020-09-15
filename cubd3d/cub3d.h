@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <errno.h>
 #define key_m 46
 #define key_fd 65363
 #define key_fg 65361
@@ -129,6 +130,7 @@ typedef struct data_s
 	int *d_ad;
 	int sl;
 	int sreenshot;
+	int count;
 
 }		data_t;
 
@@ -159,4 +161,5 @@ void	plafond(struct data_s *data);
 void	sol(struct data_s *data);
 void    move(int key, data_t *data);
 int ft_quit(data_t *data);
+void ft_error(char *str);
 

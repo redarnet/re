@@ -19,12 +19,12 @@ void	plafond(struct data_s *data)
 
         i = 0;
 	y = 0;
-        while (i != data->y)
+        while (i != data->x)
         {
         	y = 0;
-                while (y != data->x / 2)
+                while (y != data->y / 2)
                 {
-			data->img_data[y * 500 + i] = data->couleur_plafond;
+			data->img_data[y * data->x + i] = data->couleur_plafond;
                         y++;
                 }
                 i++;
@@ -38,12 +38,12 @@ void	sol(struct data_s *data)
 
         i = 0;
         y = data->x/2;
-        while (i != data->y)
+        while (i != data->x)
         {
-        	y = data->x/2;
-                while (y != data->x)
+        	y = data->y/2;
+                while (y != data->y)
                 {
-			data->img_data[y * 500 + i] = data->couleur_sol;
+			data->img_data[y * data->x + i] = data->couleur_sol;
                         y++;
                 }
                 i++;

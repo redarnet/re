@@ -36,11 +36,12 @@ t_t	textures(data_t *data)
 	text.i = 0;
 	while (text.i != 5)
 	{
-		data->img_ptr = mlx_new_image(data->mlx_ptr, 500, 500);
+		data->img_ptr = mlx_new_image(data->mlx_ptr, data->x, data->y);
 		data->img_data = (int*)mlx_get_data_addr(data->img_ptr,
 		&data->bpp, &text.size_l, &text.endian);
-		text.z = mlx_xpm_file_to_image(data->mlx_ptr,
-		data->text_nord[text.i], &h, &w);
+		if (!(text.z = mlx_xpm_file_to_image(data->mlx_ptr,
+		data->text_nord[text.i], &h, &w)))
+			ft_error("bad textures");
 		text.ptr = mlx_get_data_addr(text.z,
 		&data->bpp, &text.size_l, &text.endian);
 		text.x = 0;

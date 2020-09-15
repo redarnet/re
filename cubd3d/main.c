@@ -12,6 +12,30 @@
 
 #include "cub3d.h"
 
+void rotate_start(struct data_s *data, char c)
+{
+	double rotspeed;
+	double olddirx;
+	double oldplanex;
+
+
+	rotspeed = 0;
+	if (c == 'S')
+		rotspeed = 3.2;
+	if ( c == 'E')
+		rotspeed = 1.6;
+	if ( c == 'O')
+		rotspeed = -1.6;
+	olddirx = data->dirX;
+                data->dirX = data->dirX * cos(-rotspeed) - data->dirY * sin(-rotspeed);
+                data->dirY = olddirx * sin(-rotspeed) + data->dirY * cos(-rotspeed);
+                oldplanex = data->planeX;
+                data->planeX = data->planeX * cos(-rotspeed) -
+                                data->planeY * sin(-rotspeed);
+                data->planeY = oldplanex * sin(-rotspeed) +
+                                data->planeY * cos(-rotspeed);
+}
+
 void	pos_perso(struct data_s *data)
 {
 	int x;
@@ -27,10 +51,11 @@ void	pos_perso(struct data_s *data)
 		{
 			if (data->map[y][x] == '7')
 				data->numsprite = data->numsprite + 1;
-			if (data->map[y][x] == 'p')
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'S')
 			{
 				data->py = x + 1;
 				data->px = y + 1;
+				rotate_start(data, data->map[y][x]);
 			}
 			x++;
 		}
@@ -75,7 +100,10 @@ int	**change_map(char **map)
 		while (map[x][z] != '\0')
 		{
 			str[x + 1][z + 1] = map[x][z] - 48;
-			if (str[x + 1][z + 1] == 'p' - 48)
+			if ((str[x + 1][z + 1] == 'N' - 48)
+			    || (str[x + 1][z + 1] == 'S' - 48)
+			    || (str[x + 1][z + 1] == 'O' - 48)
+			    || (str[x + 1][z + 1] == 'E' - 48))
 				str[x + 1][z + 1] = 0;
 			if (x == i - 1)
 				str[x + 1][z + 1] = 1;
@@ -129,13 +157,25 @@ int	main(int argc, char **argv)
 	data.dirY = 0;
 	data.mapx = 0;
 	data.mapy = 0;
+	data.px = 0;
+	data.py = 0;
 	data.planeX = 0;
 	data.planeY = 0.66;
+	data.mapx = 0;
+	data.mapy = 0;
+	data.sidedirx = 0;
+	data.sidediry = 0;
+	data.side = 0;
+	data.stepx = 0;
+	data.y2 = 0;
+	data.texPos = 0;
+	data.stepy = 0;
 	ft_pars_fichier(&data);
 //	error_map(data.map);
 	pos_perso(&data);
 	tex_sprite(&data);
 	data.map2 = change_map(data.map);
+
 	if (argc == 2 && !ft_strncmp(argv[1],"--save",6 ))
 		save_bmp(data);
 	else
@@ -146,9 +186,9 @@ int	main(int argc, char **argv)
 		data.y = 1400;
 	data.mlx_ptr = mlx_init(&data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.x, data.y, "Cubd3d");
-	deal_key_map(97, &data);
+	deal_key_map(115, &data);
 	mlx_hook(data.win_ptr, 2, (1L << 0), &deal_key_map, &data);
-//	mlx_hook(data.win_ptr, 17, (1L << 17), *ft_quit, &data);
+	mlx_hook(data.win_ptr, 17, (1L << 7), ft_quit, &data);
 	mlx_loop(data.mlx_ptr);
 	free(data.map);
 	}

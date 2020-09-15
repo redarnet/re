@@ -22,10 +22,8 @@ int move_pos(int pos)
 void	move(int key, data_t *data)
 {
 	double movespeed;
-	double rotspeed;
 
 	movespeed = 0.2;
-	rotspeed = 0.06;
 	if (key == key_a)
 	{
 		if (move_pos(data->map2[(int)(data->px + data->dirX
@@ -98,8 +96,8 @@ int	deal_key_map(int key, data_t *data)
 {
 	if (key == 65307)
 		ft_quit(data);
-	move(key, data);
 	rotate(key, data);
+	move(key, data);
 	ft_draw_walls(*data, key);
 	return (0);
 }

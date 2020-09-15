@@ -19,11 +19,10 @@ void	algobis(data_t *data)
 	hit = 0;
 	while (hit == 0)
 	{
-		if (data->sidediry <= 0 || (data->sidedirx
-			>= 0 && data->sidedirx < data->sidediry))
+		if (data->sidedirx < data->sidediry)
 		{
-			data->sidedirx = data->sidedirx + data->deltadirx;
-			data->mapx = data->mapx + data->stepx;
+			data->sidedirx += data->deltadirx;
+			data->mapx += data->stepx;
 			data->side = 0;
 		}
 		else
@@ -32,7 +31,7 @@ void	algobis(data_t *data)
 			data->mapy = data->mapy + data->stepy;
 			data->side = 1;
 		}
-		if (data->map2[data->mapx][data->mapy] != 0)
+		if (data->map2[data->mapx][data->mapy] > 0)
 			hit = 1;
 	}
 }
@@ -63,16 +62,11 @@ void	algobis2(data_t *data)
 
 void	algo(data_t *data, int pix, double dirx, double diry)
 {
-	float	ratio;
-	int		side;
-	int		hit;
-	float	perwall;
 	double	camerax;
 
 	data->mapx = (int)data->px;
 	data->mapy = (int)data->py;
-	camerax = 2 * pix / (double)(500) - 1;
-	ratio = ((float)pix - data->x / 2) / data->x / 2;
+	camerax = 2 * pix / (double)(data->x) - 1;
 	data->raydirx = data->dirX + data->planeX * camerax;
 	data->raydiry = data->dirY + data->planeY * camerax;
 	data->deltadirx = sqrt(1 + (data->raydiry * data->raydiry)

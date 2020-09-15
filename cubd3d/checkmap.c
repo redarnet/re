@@ -1,7 +1,7 @@
 /*
 void	checkmap(struct data_s data, int x, int y)
 {
-	int	**map;
+	char	**map;
 
 	p->pl->pos = 0;
 	map = data.map[x][y];

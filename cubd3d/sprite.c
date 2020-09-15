@@ -65,7 +65,7 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite,
 			sprite.color2 = text.texture[4][0][texwidth *
 				sprite.texy + sprite.texx];
 			if ((sprite.color2 & 0x00FFFFFF) != 0)
-				img_data2[y * 500 + sprite.stripe] = sprite.color2;
+				img_data2[y * data.x + sprite.stripe] = sprite.color2;
 			y++;
 		}
 		sprite.stripe++;
