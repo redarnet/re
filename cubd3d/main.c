@@ -49,18 +49,21 @@ void	pos_perso(struct data_s *data)
 		x = 0;
 		while (data->map[y][x] != '\0')
 		{
-			if (data->map[y][x] == '7')
+		//	if ((data->map[y][0] != 'F') && (data->map[y][0] != 'C') && (data->map[y][0] != 'R'))
+			if (data->map[y][x] == '2')
 				data->numsprite = data->numsprite + 1;
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'S')
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'S' ||
+			data->map[y][x] == 'E' || data->map[y][x] == 'O')
 			{
-				data->py = x + 1;
-				data->px = y + 1;
+				data->py = x + 1.5;
+				data->px = y + 1.5;
 				rotate_start(data, data->map[y][x]);
 			}
 			x++;
 		}
 		y++;
 	}
+	data->numsprite = 25;
 }
 
 int	ft_quit(data_t *data)
@@ -78,12 +81,12 @@ int	**change_map(char **map)
 	int x;
 	int z;
 
-	i = 0;
+	i = 9;
 	y = 0;
 	while (map[i] != 0)
 		i++;
 	str = (int**)malloc(sizeof(int*) * i + 1);
-	i = 0;
+	i = 9;
 	while (map[i] != 0)
 	{
 		y = 0;
@@ -92,7 +95,7 @@ int	**change_map(char **map)
 		str[i + 1] = (int*)malloc(sizeof(int) * y + 1);
 		i++;
 	}
-	x = 0;
+	x = 9;
 	z = 0;
 	while (map[x] != 0)
 	{
@@ -130,7 +133,7 @@ void	tex_sprite(data_t *data)
 		i = 0;
 		while (data->map[y][i] != '\0')
 		{
-			if (data->map[y][i] == '7')
+			if (data->map[y][i] == '2')
 			{
 				data->sprite[z].posy = y + 1.5;
 				data->sprite[z].posx = i + 1.5;
@@ -175,6 +178,7 @@ int	main(int argc, char **argv)
 	pos_perso(&data);
 	tex_sprite(&data);
 	data.map2 = change_map(data.map);
+	checkmap(data, data.map);
 
 	if (argc == 2 && !ft_strncmp(argv[1],"--save",6 ))
 		save_bmp(data);
@@ -186,7 +190,7 @@ int	main(int argc, char **argv)
 		data.y = 1400;
 	data.mlx_ptr = mlx_init(&data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.x, data.y, "Cubd3d");
-	deal_key_map(115, &data);
+	deal_key_map(112, &data);
 	mlx_hook(data.win_ptr, 2, (1L << 0), &deal_key_map, &data);
 	mlx_hook(data.win_ptr, 17, (1L << 7), ft_quit, &data);
 	mlx_loop(data.mlx_ptr);

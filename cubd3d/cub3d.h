@@ -162,4 +162,5 @@ void	sol(struct data_s *data);
 void    move(int key, data_t *data);
 int ft_quit(data_t *data);
 void ft_error(char *str);
+void checkmap(struct data_s data, char **str);
 

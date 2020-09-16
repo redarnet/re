@@ -32,19 +32,30 @@ void	ft_double_start(char **str, char c)
 	}
 }
 
-int first_letter(char c, int count)
+int first_letter(char c, int count , int i)
 {	
-	if ( c == 'N' || c == 'R' || c == 'S' || c == 'W' || c == 'E' 
-		|| c == 'F' || c == 'C' ) 
+	if ((c == 'N' || c == 'R' || c == 'S' || c == 'W' || c == 'E' 
+		|| c == 'F' || c == 'C' ) && i == 0) 
 		return 1;
-	if (c == '1' && count < 8)
+	else if(c == '1' && count < 8)
+	{
+		ft_putchar_fd(c,1 );
+		ft_putnbr_fd(count,1 );
+		ft_error("beadsyntaxe");
+	}
+	else if (c == '1')
+		return 0;
+	else if (c == '\0' || c == '\n')
+		return 0;
+	else
+	{
+		ft_putchar_fd(c,1 );
 		ft_error("badsyntaxe");
-	if (c == '1')
-		return 1;
+	}
 	return 0;
 }
 
-int	ft_syntaxe(char **str)
+void	ft_syntaxe(char **str)
 {
 	int y;
 	int i;
@@ -59,16 +70,14 @@ int	ft_syntaxe(char **str)
 		{
 			while(str[y][i] == ' ')
 				i++;
-			if (first_letter(str[y][i], count))
-				count++;
-			y++;
+			if (count += first_letter(str[y][i], count, i))
+				;
 		}
+		if (count += first_letter(str[y][i], count, i))
+				;
 		i = 0;
-		if (first_letter(str[y][i], count))
-			count++;
 		y++;
 	}
-	return count;
 }
 
 void ft_check_pars(char **str)
@@ -266,6 +275,7 @@ void	ft_pars_fichier(struct data_s *data)
 	free(line);
 	line = NULL;
 	data->map = ft_split(tab, '\n');
+
 	ft_check_pars(data->map);
 	free(tab);
 	tab =  NULL;
