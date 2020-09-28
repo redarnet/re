@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	plafond(struct data_s *data)
+void	plafond(data_t *img,data_t *data)
 {
         int i;
         int y;
@@ -24,14 +24,14 @@ void	plafond(struct data_s *data)
         	y = 0;
                 while (y != data->y / 2)
                 {
-			data->img_data[y * data->x + i] = data->couleur_plafond;
+			img->img_data[y * data->x + i] = data->couleur_plafond;
                         y++;
                 }
                 i++;
         }
 }
 
-void	sol(struct data_s *data)
+void	sol(data_t *img , data_t *data)
 {
         int i;
         int y;
@@ -43,7 +43,7 @@ void	sol(struct data_s *data)
         	y = data->y/2;
                 while (y != data->y)
                 {
-			data->img_data[y * data->x + i] = data->couleur_sol;
+			img->img_data[y * data->x + i] = data->couleur_sol;
                         y++;
                 }
                 i++;

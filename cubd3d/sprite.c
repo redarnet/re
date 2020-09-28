@@ -42,7 +42,7 @@ double	abss(double a)
 }
 
 void	ft_sprite2(struct data_s data, struct sprite_s sprite,
-		double *zbuffer, int *img_data2, struct t_s text)
+		double *zbuffer, int *img_data2)
 {
 	int y;
 	int d;
@@ -62,7 +62,7 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite,
 		{
 			d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
 			sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
-			sprite.color2 = text.texture[4][0][texwidth *
+			sprite.color2 = data.text.texture[4][0][texwidth *
 				sprite.texy + sprite.texx];
 			if ((sprite.color2 & 0x00FFFFFF) != 0)
 				img_data2[y * data.x + sprite.stripe] = sprite.color2;
@@ -91,20 +91,23 @@ void ft_sprite1(struct data_s data, struct sprite_s *sprite)
 	sprite->stripe = sprite->drawstartx;
 }
 
-void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2, struct t_s text)
+void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
 {
 	int	i;
 	int	*spriteorder;
 	struct sprite_s	sprite;
 	double		spritedistance[data.numsprite];
 
+	ft_putnbr_fd(data.numsprite, 1);
 	spriteorder = (int*)malloc(sizeof(double) * data.numsprite + 1);
 	spriteorder = sortSprites(data, spriteorder, spritedistance, data.numsprite);
 	i = data.numsprite;
+	
 	while (i >= 0)
 	{
 		sprite.spritex = data.sprite[spriteorder[i]].posy - data.px;
 		sprite.spritey = data.sprite[spriteorder[i]].posx - data.py;
+		
 		sprite.invdet = 1.0 / (data.planeX *
 				data.dirY - data.dirX * data.planeY);
 		sprite.transformx = sprite.invdet *
@@ -114,7 +117,8 @@ void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2, struct t_s t
 		sprite.spritescreenx = (int)((data.x / 2) *
 				(1 + sprite.transformx / sprite.transformy));
 		ft_sprite1(data, &sprite);
-		ft_sprite2(data, sprite, zbuffer, img_data2, text);
+		ft_sprite2(data, sprite, zbuffer, img_data2);
+		
 		i--;
 	}
 }

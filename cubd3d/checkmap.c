@@ -63,53 +63,50 @@ void	ft_check(data_t *data, char **str, char c, int x, int y, int o)
 	
 }
 
-void	checkmap(struct data_s data, char **str)
+int	checkmap(struct data_s data, char **str)
 {
 	int x;
         int y;
-	int o;
 
+	data.count2 = 0;
 	data.count = 0;
         x = 0;
         y = 0;
-	o = 0;
         while (str[y] != 0)
         {
                 x = 0;
                 while (str[y][x] != '\0')
                 {
 			if ((str[y][0] != 'R') && ( str[y][0] != 'F') && (str[y][0] != 'C'))
-				if (str[y][x] == '1' && o == 0)
+				if (str[y][x] == '1' && data.count2 == 0)
 				{
-				o = y;
+				data.count2 = y;
 				}
                         x++;
                 }
                 y++;
         }
-	y = o;
+	y = data.count2;
         while (str[y] != 0)
         {
                 x = 0;
                 while (str[y][x] != '\0')
                 {
-			ft_putchar_fd(str[y][x], 1);
                         x++;
                 }
-		ft_putchar_fd('\n', 1);
                 y++;
         }
-	y = o;
+	y = data.count2;
         while (str[y] != 0)
         {
                 x = 0;
                 while (str[y][x] != '\0')
                 {
-			ft_check(&data, str, str[y][x], x, y, o);
+			ft_check(&data, str, str[y][x], x, y, data.count2);
                         x++;
                 }
                 y++;
         }
-
+	return data.count2;
 }
 

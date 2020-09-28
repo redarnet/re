@@ -189,7 +189,7 @@ char *ft_strsub(char *line)
 	while (line[i] == ' ')
 		i++;
 
-	str = malloc(sizeof(char) * ft_strlen(line) - i + 1);
+	str = malloc(sizeof(char) * ft_strlen(line) - i);
 	while (line[i + z] != '\0')
 	{
 		if (line[i + z] == ' ')
@@ -225,8 +225,10 @@ void   pars(data_t *data, char *line)
 	}
 	else if (line[0] == 'W') 
 		data->text_nord[1] =  ft_strsub(line);
+	
 	else if (line[0] == 'E') 
 		data->text_nord[2] =  ft_strsub(line);
+		
 	else if (line[0] == 'F')
 		data->couleur_sol = parse_s_p(line);
 	else if (line[0] == 'C')
@@ -236,6 +238,8 @@ void   pars(data_t *data, char *line)
 char	*recu_line(data_t *data, int x, int fd, char *tab)
 {
 	char *line;
+	char *str;
+
 	while (x != 6)
 	{
 		get_next_line(fd, &line);
@@ -243,8 +247,13 @@ char	*recu_line(data_t *data, int x, int fd, char *tab)
 			get_next_line(fd, &line);
 		pars(data, line);
 		x = x + 1;
-		tab = ft_strjoin(tab , line);
-		tab = ft_strjoin(tab, "\n");
+		str = tab;
+		tab = ft_strjoin(str , line);
+		free(str);
+		str = tab;
+		tab = ft_strjoin(str, "\n");
+		free(str);
+		free(line);
 	}
 	return (tab);
 }
@@ -255,28 +264,32 @@ void	ft_pars_fichier(struct data_s *data)
 	char *tab;
 	int fd;
 	int x;
+	char *str;
 
 	x = 0;
 	fd = open("element.cub", O_RDONLY);
-	tab =  malloc(1);
-	tab[0] = '\0';
 	get_next_line(fd, &line);
-	tab = ft_strjoin(tab , line);
-	tab = ft_strjoin(tab, "\n");
+	tab = ft_strjoin(str, line);
+	free(str);
+	str = tab;
+	tab = ft_strjoin(str, "\n");
+	free(str);
 	pars(data, line);
+	free(line);
 	tab = recu_line(data, x, fd, tab);
 	while (get_next_line(fd, &line) == 1)
 	{
+		str = tab;
 		pars(data, line);
-		tab = ft_strjoin(tab , line);
+		tab = ft_strjoin(str , line);
+		free(str);
 		free(line);
-		tab = ft_strjoin(tab, "\n");
+		str = tab;
+		tab = ft_strjoin(str, "\n");
+		free(str);
 	}
-	free(line);
-	line = NULL;
-	data->map = ft_split(tab, '\n');
-
+	data->map = ft_split((tab), '\n');
 	ft_check_pars(data->map);
 	free(tab);
-	tab =  NULL;
+	free(line);
 }

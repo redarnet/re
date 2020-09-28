@@ -40,9 +40,8 @@ void	ft_algo(struct data_s data, int *img_data2,
 	int zo;
 	int texy;
 	int color;
-	t_t text;
+	struct t_s text;
 
-	text = textures(&data);
 	pix = 0;
 	while (pix != data.x)
 	{
@@ -55,7 +54,7 @@ void	ft_algo(struct data_s data, int *img_data2,
 			zo = data.texPos;
 			texy = zo;
 			data.texPos += data.step;
-			color = text.texture[data.walldir][0][texheight * texy + data.texX];
+			color = data.text.texture[data.walldir][0][texheight * texy + data.texX];
 			img_data2[data.y2 * data.x + pix] = color;
 			data.y2++;
 		}
@@ -64,18 +63,52 @@ void	ft_algo(struct data_s data, int *img_data2,
 	}
 }
 
+data_t	*lmlx_new_image(void *mlx_ptr, void *win_ptr, int width, int height)
+{
+	data_t	*new;
+	int		trsh;
+	int		bpp;
+	int		endian;
+
+	bpp = 32;
+	endian = 1;
+	if (!(new = (data_t*)malloc(sizeof(data_t))))
+		return (NULL);
+	new->x = width;
+	new->y = height;
+	new->mlx_ptr = mlx_ptr;
+	new->win_ptr = win_ptr;
+	if (!(new->img_ptr = mlx_new_image(mlx_ptr, width, height)))
+	{
+		free(new);
+		return (NULL);
+	}
+	new->img_data = (int*)mlx_get_data_addr(new->img_ptr, &bpp, &trsh, &endian);
+	return (new);
+}
+
+void	lmlx_destroy_image(data_t *img)
+{
+	mlx_destroy_image(img->mlx_ptr, img->img_ptr);
+	free(img);
+}
+
 void	ft_draw_walls(struct data_s data, int key)
 {
 	int	texheight;
 	double		*zbuffer;
-	t_t		text;
+	int h;
+	int w;
+	data_t *img;
 
+	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);	
 	texheight = 64;
-	text = textures(&data);
-	zbuffer = (double*)malloc(sizeof(double) * data.x + 1);
-	plafond(&data);
-	sol(&data);
-	ft_algo(data, data.img_data, texheight, zbuffer);
-	ft_sprite(data, zbuffer, data.img_data, text);
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img_ptr, 0, 0);
+	plafond(img, &data);
+	sol(img, &data);
+	
+	ft_algo(data, img->img_data, texheight, data.zbuffer);
+	ft_sprite(data, data.zbuffer, img->img_data);
+	mlx_put_image_to_window(img->mlx_ptr, img->win_ptr, img->img_ptr, 0, 0);
+lmlx_destroy_image(img);
+
 }

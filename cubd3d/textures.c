@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.c                                         :+:      :+:    :+:   */
+/*   data->textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,47 @@
 
 #include "cub3d.h"
 
-t_t	textures_bis(t_t text, data_t *data)
+
+void	lmlx_free_t_img(data_t *data)
+
+{
+	if (data)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
+		free(data);
+	}
+}
+
+data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
+{
+	data_t	*new;
+	void	*temp;
+	int		bpp;
+	int		endian;
+	int		trsh;
+
+	bpp = 32;
+	endian = 1;
+	new = (data_t*)malloc(sizeof(data_t));
+	new->mlx_ptr = mlx_ptr;
+	new->win_ptr = NULL;
+	new->x = 0;
+	new->y = 0;
+	temp = mlx_xpm_file_to_image(mlx_ptr, path, &new->x, &new->y);
+	if (!(temp))
+	{
+		free(new);
+		return (NULL);
+	}
+	new->img_ptr = temp;
+	new->img_data = (int*)mlx_get_data_addr(temp, &new->bpp, &new->size_l, &endian);
+	  new->text.ptr = mlx_get_data_addr(temp,
+                &new->bpp, &new->size_l, &endian);
+
+	return (new);
+}
+
+t_t	textures_bis(data_t *img, data_t *data)
 {
 	int l;
 	int y;
@@ -20,39 +60,36 @@ t_t	textures_bis(t_t text, data_t *data)
 	y = 0;
 	while (y != 64)
 	{
-		l = *(int*)(text.ptr + text.size_l * text.x + data->bpp / 8 * y);
-		text.texture[text.i][text.x][y] = l;
+		l = *(int*)(img->text.ptr + img->size_l * data->text.x + img->bpp / 8 * y);
+		data->text.texture[data->text.i][data->text.x][y] = l;
 		y++;
 	}
-	return (text);
+	return (data->text);
 }
 
-t_t	textures(data_t *data)
+
+void	textures(data_t *data)
 {
-	t_t text;
 	int h;
 	int w;
+	void *temp;
+	data_t *img;
+	
 
-	text.i = 0;
-	while (text.i != 5)
+	data->text.i = 0;
+	while (data->text.i != 5)
 	{
-		data->img_ptr = mlx_new_image(data->mlx_ptr, data->x, data->y);
-		data->img_data = (int*)mlx_get_data_addr(data->img_ptr,
-		&data->bpp, &text.size_l, &text.endian);
-		if (!(text.z = mlx_xpm_file_to_image(data->mlx_ptr,
-		data->text_nord[text.i], &h, &w)))
-			ft_error("bad textures");
-		text.ptr = mlx_get_data_addr(text.z,
-		&data->bpp, &text.size_l, &text.endian);
-		text.x = 0;
-		text.y = 0;
-		while (text.x != 64)
+		img = lmlx_xpm_to_img(data->mlx_ptr, data->text_nord[data->text.i]);
+		data->text.x = 0;
+		data->text.y = 0;
+		while (data->text.x != 64)
 		{
-			text.y = 0;
-			text = textures_bis(text, data);
-			text.x++;
+			data->text.y = 0;
+			data->text = textures_bis(img, data);
+			data->text.x++;
 		}
-		text.i++;
+		data->text.i++;
+		lmlx_free_t_img(img);
 	}
-	return (text);
 }
+
