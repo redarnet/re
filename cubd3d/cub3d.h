@@ -74,7 +74,8 @@ typedef struct data_s
 	sprite_t *sprite;
 	//	struct sprite_s;
 	int buffer[500][500];
-	double ZBuffer[500];
+	double zbuffer[500];
+	t_t text;
 	int texNum;
 	int walldir;
 	double texPos;
@@ -131,36 +132,55 @@ typedef struct data_s
 	int sl;
 	int sreenshot;
 	int count;
+	int count2;
+	int size_free;
+	int size_l;
 
 }		data_t;
 
-t_t textures(data_t *data);
+void	textures(data_t *data);
 int deal_key_map(int key, data_t *data);
-void	algo(data_t *data, int pix, double dirX, double dirY);
+void	algo(data_t *data, int pix);
 void    ft_algo(struct data_s data, int *img_data2 , int texheight, double *zbuffer); 
 void	algo2(data_t *data);
 int	afficher_mur(int key,data_t *data);
-void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2, struct t_s text);
+void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2);
 void	remplir_blanc(struct data_s data);
 void	move_player(int nb, data_t *data);
 double abss(double a);
 void save_bmp(struct data_s data);
 //int *sortSprites(struct data_s data, int *sprite_order, double *sprite_distance, int sprite_nb);
-void	rotate(int key, data_t *data);
 void	ft_affiche_map(data_t *data);
 int	affiche_bousole(int key, data_t *data);
 void	line(struct data_s data, int x1, int y1, int x2, int y2, int couleur);
-void	ft_draw_walls(struct data_s data, int key);
-void	plafond(struct data_s *data);
-void	sol(struct data_s *data);
+void	ft_draw_walls(struct data_s data);
+void	plafond(data_t *img, data_t *data);
+void	sol(data_t *img, data_t *data);
 void	error_map(char **str);
 void	ft_pars_fichier(struct data_s *data);
-int rgb_hex(int red, int green, int blue);
+int rgb_hex(int red, int green, int blue, data_t *data);
 char *ft_itoa_base(int nb, char *str);
-void	plafond(struct data_s *data);
-void	sol(struct data_s *data);
 void    move(int key, data_t *data);
 int ft_quit(data_t *data);
-void ft_error(char *str);
-void checkmap(struct data_s data, char **str);
+void ft_error(char *str, data_t *data);
+int checkmap(struct data_s data);
+int	split(char *line, int *y, data_t *data, int nb);
+char	*ft_strcat(char *s1, const char *s2);
+char	*ft_strcpy(char *dst, const char *sr);
+char	*ft_strjoin_free(char *s1, char *s2);
+int	ft_strsub_bis(char *line, data_t *data);
+void	rotate(int key, data_t *data, double rotspeed);
+void	save_bmp(struct data_s data);
+int	parse_s_p(char *line, data_t *data);
+void	ft_free_map(int **map, data_t *data);
+void	ft_free_m(char **map, data_t *data);
+data_t *lmlx_new_image(void *mlx_ptr, void *win_ptr, int width , int height);
+int	**change_map2(char **map, int **str, int count, int i);
+int	**change_map(char **map, int count, data_t *data);
+void	pos_perso(struct data_s *data);
+void	tex_sprite(data_t *data);
+void	ft_check_pars(char **str, data_t *data);
+
+
+
 
