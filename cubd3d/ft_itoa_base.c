@@ -48,8 +48,6 @@ char	*remplir(int nb, char *base, char *str, int i)
 	return (str);
 }
 
-
-
 char	*ft_itoa_base(int n, char *base)
 {
 	char	*str;
@@ -57,7 +55,7 @@ char	*ft_itoa_base(int n, char *base)
 
 	i = 0;
 	if (n < 0)
-		return NULL;
+		return (NULL);
 	else
 	{
 		i = taille_malloc(n, base);

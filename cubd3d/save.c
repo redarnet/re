@@ -57,27 +57,23 @@ void save_bmp(struct data_s data)
 {
 	int fd;
 	int texheight;
-	double *zbuffer;
-	int size_l;
-	int endian;
-	t_t text;
+	data_t *img;
+
 	t_bmp bmp;
-/*
 	texheight = 64;
 	if((fd = open("save.bmp", O_RDWR | O_CREAT, S_IRWXU)) == -1)
 	save();
- 	data.mlx_ptr = mlx_init(&data);
-        data.img_ptr = mlx_new_image(data.mlx_ptr, 500, 500);
-	data.img_data = (int*)mlx_get_data_addr(data.img_ptr,
-                &data.bpp, &size_l, &endian);
-	 sol(&data);
-	 plafond(data, data);
-	ft_algo(data, data.img_data, texheight , zbuffer);
-	ft_sprite(data, zbuffer, data.img_data);
+	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);
+        texheight = 64;
+        plafond(img, &data);
+        sol(img, &data);
+        ft_algo(data, img->img_data, texheight, data.zbuffer);
+        ft_sprite(data, data.zbuffer, img->img_data);
+
 	 bmp = init_bmp(&data);
 	 mlx_destroy_image(data.mlx_ptr, data.win_ptr);
 	 write_file(fd, bmp);
 	 close(fd);
-	 */
 
 }
+	 

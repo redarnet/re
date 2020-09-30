@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int	ft_atoi2(char *str)
+int		ft_atoi2(char *str)
 {
 	int x;
 	int i;
@@ -27,62 +27,17 @@ int	ft_atoi2(char *str)
 	return (x);
 }
 
-char	*ft_strcat(char *s1,const  char *s2)
-{
-	int i;
-	int j;
 
-	i = 0;
-	while (s1[i] != '\0')
-		i++;
-	j = 0;
-	while (s2[j] !=  '\0')
-	{
-		s1[i + j] = s2[j];
-		j++;
-	}
-	s1[i + j] = '\0';
-	return s1;
-}
-char	*ft_strcpy(char *dst, const char *src)
-{
-	int i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-char *ft_strjoin_free(char *s1, char *s2)
-{
-	char *str;
-
-	if (!s2 || !s2)
-		return (NULL);
-	str = malloc(sizeof(ft_strlen(s1) + ft_strlen(s2)));
-	str = ft_strcpy(str, s1);
-	str = ft_strcat(str, s2);
-	free(s1);
-	free(s2);
-	return str;
-}
-
-int	rgb_hex(int red, int green, int blue)
+int		rgb_hex(int red, int green, int blue, data_t *data)
 {
 	char	*red2;
 	char	*green2;
 	char	*blue2;
 	char	*end;
-	char *swap;
-	int		x;
+	char	*swap;
 
 	if (red > 255 || blue > 255 || green > 255)
-		ft_error("couleur range");
+		ft_error("couleur range", data);
 	red2 = ft_itoa_base(red, "0123456789ABCDEF");
 	green2 = ft_itoa_base(green, "0123456789ABCDEF");
 	blue2 = ft_itoa_base(blue, "0123456789ABCDEF");
@@ -95,7 +50,46 @@ int	rgb_hex(int red, int green, int blue)
 		blue2 = ft_strjoin(swap, blue2);
 	end = ft_strjoin_free(red2, green2);
 	end = ft_strjoin_free(end, blue2);
-	x = ft_atoi_base(end, "0123456789ABCDEF");
+	data->couleur1 = ft_atoi_base(end, "0123456789ABCDEF");
 	free(end);
-	return (x);
+	return (data->couleur1);
+}
+
+int     parse_s_p(char *line, data_t *data)
+{
+        int i;
+        int red;
+        int green;
+        int blue;
+        int x;
+
+        red = 0;
+        green = 0;
+        blue = 0;
+        i = 1;
+        while (line[i] == ' ')
+                i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                red = red * 10 - '0' + line[i];
+                i++;
+        }
+        if (line[i] != ',')
+                ft_error("syntaxe couleur", data);
+        i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                green = green * 10 - '0' + line[i];
+                i++;
+        }
+        if (line[i] != ',')
+                ft_error("syntaxe couleur", data);
+        i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                blue = blue * 10 - '0' + line[i];
+                i++;
+        }
+        x = rgb_hex(red, green, blue, data);
+        return (x);
 }

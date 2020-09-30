@@ -12,40 +12,40 @@
 
 #include "cub3d.h"
 
-void	plafond(data_t *img,data_t *data)
+void	plafond(data_t *img, data_t *data)
 {
-        int i;
-        int y;
+	int i;
+	int y;
 
-        i = 0;
+	i = 0;
 	y = 0;
-        while (i != data->x)
-        {
-        	y = 0;
-                while (y != data->y / 2)
-                {
+	while (i != data->x)
+	{
+		y = 0;
+		while (y != data->y / 2)
+		{
 			img->img_data[y * data->x + i] = data->couleur_plafond;
-                        y++;
-                }
-                i++;
-        }
+			y++;
+		}
+		i++;
+	}
 }
 
-void	sol(data_t *img , data_t *data)
+void	sol(data_t *img, data_t *data)
 {
-        int i;
-        int y;
+	int i;
+	int y;
 
-        i = 0;
-        y = data->x/2;
-        while (i != data->x)
-        {
-        	y = data->y/2;
-                while (y != data->y)
-                {
+	i = 0;
+	y = data->x / 2;
+	while (i != data->x)
+	{
+		y = data->y / 2;
+		while (y != data->y)
+		{
 			img->img_data[y * data->x + i] = data->couleur_sol;
-                        y++;
-                }
-                i++;
-        }
+			y++;
+		}
+		i++;
+	}
 }

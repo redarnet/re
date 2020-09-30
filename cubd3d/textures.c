@@ -1,20 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data->textures.c                                         :+:      :+:    :+:   */
+/*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 14:16:00 by redarnet          #+#    #+#             */
-/*   Updated: 2020/07/22 01:21:38 by user42           ###   ########.fr       */
+/*   Created: 2020/01/06 14:44:11 by redarnet          #+#    #+#             */
+/*   Updated: 2020/07/22 13:19:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	tex_sprite(data_t *data)
+{
+	int	i;
+	int	y;
+	int	z;
+
+	y = 0;
+	z = 0;
+	data->sprite = (sprite_t*)malloc(sizeof(sprite_t) * data->numsprite + 1);
+	while (data->map[y] != 0)
+	{
+		i = 0;
+		while (data->map[y][i] != '\0')
+		{
+			if ((data->map[y][0] != 'F') && (data->map[y][0] != 'C')
+				&& (data->map[y][0] != 'R'))
+				if (data->map[y][i] == '2')
+				{
+					data->sprite[z].posy = y + 1.5;
+					data->sprite[z].posx = i + 1.5;
+					data->map[y][i] = '0';
+					z++;
+				}
+			i++;
+		}
+		y++;
+	}
+}
 
 void	lmlx_free_t_img(data_t *data)
-
 {
 	if (data)
 	{
@@ -29,7 +56,6 @@ data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
 	void	*temp;
 	int		bpp;
 	int		endian;
-	int		trsh;
 
 	bpp = 32;
 	endian = 1;
@@ -45,10 +71,10 @@ data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
 		return (NULL);
 	}
 	new->img_ptr = temp;
-	new->img_data = (int*)mlx_get_data_addr(temp, &new->bpp, &new->size_l, &endian);
-	  new->text.ptr = mlx_get_data_addr(temp,
-                &new->bpp, &new->size_l, &endian);
-
+	new->img_data = (int*)mlx_get_data_addr(temp,
+		&new->bpp, &new->size_l, &endian);
+	new->text.ptr = mlx_get_data_addr(temp,
+			&new->bpp, &new->size_l, &endian);
 	return (new);
 }
 
@@ -60,21 +86,17 @@ t_t	textures_bis(data_t *img, data_t *data)
 	y = 0;
 	while (y != 64)
 	{
-		l = *(int*)(img->text.ptr + img->size_l * data->text.x + img->bpp / 8 * y);
+		l = *(int*)(img->text.ptr + img->size_l *
+			data->text.x + img->bpp / 8 * y);
 		data->text.texture[data->text.i][data->text.x][y] = l;
 		y++;
 	}
 	return (data->text);
 }
 
-
 void	textures(data_t *data)
 {
-	int h;
-	int w;
-	void *temp;
-	data_t *img;
-	
+	data_t	*img;
 
 	data->text.i = 0;
 	while (data->text.i != 5)
@@ -92,4 +114,3 @@ void	textures(data_t *data)
 		lmlx_free_t_img(img);
 	}
 }
-

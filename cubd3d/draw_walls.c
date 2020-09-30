@@ -12,41 +12,40 @@
 
 #include "cub3d.h"
 
-int ft_walldir(struct data_s data)
+int		ft_walldir(struct data_s data)
 {
 	int walldir;
 
 	if (data.side == 1)
-	{	
+	{
 		if (data.mapy < data.py)
 			walldir = 1;
 		else
 			walldir = 2;
 	}
 	else
-	{	
+	{
 		if (data.mapx < data.px)
 			walldir = 3;
 		else
 			walldir = 0;
 	}
-	return walldir;
+	return (walldir);
 }
 
 void	ft_algo(struct data_s data, int *img_data2,
 		int texheight, double *zbuffer)
 {
-	int pix;
-	int zo;
-	int texy;
-	int color;
-	struct t_s text;
+	int		pix;
+	int		zo;
+	int		texy;
+	int		color;
 
 	pix = 0;
 	while (pix != data.x)
 	{
 		color = 0;
-		algo(&data, pix, data.dirX, data.dirY);
+		algo(&data, pix);
 		algo2(&data);
 		data.walldir = ft_walldir(data);
 		while (data.y2 < data.drawEnd)
@@ -54,7 +53,8 @@ void	ft_algo(struct data_s data, int *img_data2,
 			zo = data.texPos;
 			texy = zo;
 			data.texPos += data.step;
-			color = data.text.texture[data.walldir][0][texheight * texy + data.texX];
+			color = data.text.texture[data.walldir][0][texheight
+		* texy + data.texX];
 			img_data2[data.y2 * data.x + pix] = color;
 			data.y2++;
 		}
@@ -93,22 +93,17 @@ void	lmlx_destroy_image(data_t *img)
 	free(img);
 }
 
-void	ft_draw_walls(struct data_s data, int key)
+void	ft_draw_walls(struct data_s data)
 {
-	int	texheight;
-	double		*zbuffer;
-	int h;
-	int w;
-	data_t *img;
+	int		texheight;
+	data_t	*img;
 
-	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);	
+	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);
 	texheight = 64;
 	plafond(img, &data);
 	sol(img, &data);
-	
 	ft_algo(data, img->img_data, texheight, data.zbuffer);
 	ft_sprite(data, data.zbuffer, img->img_data);
 	mlx_put_image_to_window(img->mlx_ptr, img->win_ptr, img->img_ptr, 0, 0);
-lmlx_destroy_image(img);
-
+	lmlx_destroy_image(img);
 }

@@ -1,21 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sprite.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/06 14:44:11 by redarnet          #+#    #+#             */
+/*   Updated: 2020/07/22 13:19:24 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-static int	*sortSprites(struct data_s data, int *sprite_order,
-		double *sprite_distance, int sprite_nb)
+int	*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
 {
 	int		i;
 	int		tmp_order;
 	double	tmp_dist;
 
-	i = 0;
-	while (i < data.numsprite)
-	{
-		sprite_order[i] = i;
-		sprite_distance[i] = ((data.px - data.sprite[i].posy) *
-			(data.px - data.sprite[i].posy) + (data.py - data.sprite[i].posx)
-			* (data.py - data.sprite[i].posx));
-		i++;
-	}
 	i = 0;
 	while (i < sprite_nb - 1)
 	{
@@ -34,11 +36,22 @@ static int	*sortSprites(struct data_s data, int *sprite_order,
 	return (sprite_order);
 }
 
-double	abss(double a)
+static int	*sortsprites(struct data_s data, int *sprite_order,
+		double *sprite_distance, int sprite_nb)
 {
-	if (a < 0)
-		a = -a;
-	return (a);
+	int		i;
+
+	i = 0;
+	while (i < data.numsprite)
+	{
+		sprite_order[i] = i;
+		sprite_distance[i] = ((data.px - data.sprite[i].posy) *
+		(data.px - data.sprite[i].posy) + (data.py - data.sprite[i].posx)
+				* (data.py - data.sprite[i].posx));
+		i++;
+	}
+	sprite_order = sortsprites2(sprite_order, sprite_distance, sprite_nb);
+	return (sprite_order);
 }
 
 void	ft_sprite2(struct data_s data, struct sprite_s sprite,
@@ -54,25 +67,25 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite,
 	while (sprite.stripe < sprite.drawendx)
 	{
 		sprite.texx = (int)(256 * (sprite.stripe - (-sprite.spritewidth / 2 +
-			sprite.spritescreenx)) * texwidth / sprite.spritewidth) / 256;
+		sprite.spritescreenx)) * texwidth / sprite.spritewidth) / 256;
 		y = sprite.drawstarty;
-		if (sprite.transformy > 0 && sprite.stripe > 0 && 
-			sprite.stripe < data.x && sprite.transformy < zbuffer[sprite.stripe])
-		while (y < sprite.drawendy)
-		{
-			d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
-			sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
-			sprite.color2 = data.text.texture[4][0][texwidth *
-				sprite.texy + sprite.texx];
-			if ((sprite.color2 & 0x00FFFFFF) != 0)
-				img_data2[y * data.x + sprite.stripe] = sprite.color2;
-			y++;
-		}
+		if (sprite.transformy > 0 && sprite.stripe > 0 && sprite.stripe
+				< data.x && sprite.transformy < zbuffer[sprite.stripe])
+			while (y < sprite.drawendy)
+			{
+				d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
+				sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
+				sprite.color2 = data.text.texture[4][0][texwidth *
+					sprite.texy + sprite.texx];
+				if ((sprite.color2 & 0x00FFFFFF) != 0)
+					img_data2[y * data.x + sprite.stripe] = sprite.color2;
+				y++;
+			}
 		sprite.stripe++;
 	}
 }
 
-void ft_sprite1(struct data_s data, struct sprite_s *sprite)
+void	ft_sprite1(struct data_s data, struct sprite_s *sprite)
 {
 	sprite->spriteheight = abss((int)((data.y / (sprite->transformy))));
 	sprite->drawstarty = -sprite->spriteheight / 2 + data.y / 2;
@@ -93,21 +106,19 @@ void ft_sprite1(struct data_s data, struct sprite_s *sprite)
 
 void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
 {
-	int	i;
-	int	*spriteorder;
+	int		i;
+	int		*spriteorder;
 	struct sprite_s	sprite;
 	double		spritedistance[data.numsprite];
 
-	ft_putnbr_fd(data.numsprite, 1);
 	spriteorder = (int*)malloc(sizeof(double) * data.numsprite + 1);
-	spriteorder = sortSprites(data, spriteorder, spritedistance, data.numsprite);
+	spriteorder = sortsprites(data, spriteorder,
+			spritedistance, data.numsprite);
 	i = data.numsprite;
-	
 	while (i >= 0)
 	{
 		sprite.spritex = data.sprite[spriteorder[i]].posy - data.px;
 		sprite.spritey = data.sprite[spriteorder[i]].posx - data.py;
-		
 		sprite.invdet = 1.0 / (data.planeX *
 				data.dirY - data.dirX * data.planeY);
 		sprite.transformx = sprite.invdet *
@@ -118,8 +129,6 @@ void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
 				(1 + sprite.transformx / sprite.transformy));
 		ft_sprite1(data, &sprite);
 		ft_sprite2(data, sprite, zbuffer, img_data2);
-		
 		i--;
 	}
 }
-

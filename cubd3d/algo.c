@@ -60,7 +60,7 @@ void	algobis2(data_t *data)
 	}
 }
 
-void	algo(data_t *data, int pix, double dirx, double diry)
+void	algo(data_t *data, int pix)
 {
 	double	camerax;
 

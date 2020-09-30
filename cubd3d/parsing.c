@@ -11,228 +11,60 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-void	ft_double_start(char **str, char c)
+
+char	*ft_strsub(char *line, data_t *data)
 {
-	int i;
+	char	*str;
+	int		i;
+	int		z;
 
-	i = 0;
-	while (str[i] != 0)
-	{
-		if (str[i][0] == c)
-		{
-			i++;
-			while (str[i] != 0)
-			{
-				if(str[i][0] == c)
-					ft_error("bad syntaxee");
-				i++;
-			}
-		}
-		i++;
-	}
-}
-
-int first_letter(char c, int count , int i)
-{	
-	if ((c == 'N' || c == 'R' || c == 'S' || c == 'W' || c == 'E' 
-		|| c == 'F' || c == 'C' ) && i == 0) 
-		return 1;
-	else if(c == '1' && count < 8)
-	{
-		ft_putchar_fd(c,1 );
-		ft_putnbr_fd(count,1 );
-		ft_error("beadsyntaxe");
-	}
-	else if (c == '1')
-		return 0;
-	else if (c == '\0' || c == '\n')
-		return 0;
-	else
-	{
-		ft_putchar_fd(c,1 );
-		ft_error("badsyntaxe");
-	}
-	return 0;
-}
-
-void	ft_syntaxe(char **str)
-{
-	int y;
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	y = 0;
-	while (str[y] !=  0)
-	{
-		while (str[y][i] == ' ')
-		{
-			while(str[y][i] == ' ')
-				i++;
-			if (count += first_letter(str[y][i], count, i))
-				;
-		}
-		if (count += first_letter(str[y][i], count, i))
-				;
-		i = 0;
-		y++;
-	}
-}
-
-void ft_check_pars(char **str)
-{
-	ft_double_start(str, 'R');
-	ft_double_start(str, 'W');
-	ft_double_start(str, 'E');
-	ft_double_start(str, 'C');
-	ft_double_start(str, 'F');
-	ft_syntaxe(str);
-	
-
-}
-
-static int split(char *line, int *y)
-{
-	int nb;
-	int  i;
-
-	i = 2;
-	nb = 0;
-	while (line[i] == ' ')
-		i++;
-	while (line[i] >= '0' && line[i] <= '9')
-	{
-		nb = nb * 10 - '0' + line[i];
-		i++;
-	}
-	i++;
-	while (line[i] == ' ')
-		i++;
-	while (line[i] >= '0' && line[i] <= '9')
-	{
-		*y = *y * 10 -  '0' + line[i];
-		i++;
-	}
-	i++;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] != '\0')
-		ft_error("syntaxe config");
-	return nb;
-}
-
-int 	parse_s_p(char *line)
-{
-	int i;
-	int red;
-	int green;
-	int blue;
-	int x;
-
-	red = 0;
-	green = 0;
-	blue = 0;
-	i = 1;
-	while(line[i] == ' ')
-		i++;
-	while (line[i] >= '0' &&line[i] <= '9')
-	{
-		red = red * 10 - '0' + line[i];
-		i++;
-	}
-	if (line[i] != ',')
-		ft_error("syntaxe couleur");
-	i++;
-	while (line[i] >= '0' &&line[i] <= '9')
-	{
-		green = green * 10 - '0' + line[i];
-		i++;
-	}
-	if (line[i] != ',')
-		ft_error("syntaxe couleur");
-	i++;
-	while (line[i] >= '0' &&line[i] <= '9')
-	{
-		blue = blue * 10 - '0' + line[i];
-		i++;
-	}
-	x = rgb_hex(red, green, blue);
-	return x;
-}
-
-
-char *ft_strsub(char *line)
-{
-	char *str;
-	int i;
-	int z;
-
-	i  = 3;
 	z = 0;
-	if (line[0] == 'N')
-		if (line[1] != 'O')
-			ft_error("syntaxe configh");
-	if (line[0] == 'S')
-	{
-		if (line[1] == ' ')
-			i = 2;
-		if (line[1] != 'O' && line[1] != ' ')
-			ft_error("synetaxe configh");
-	}
-	if (line[0] == 'W')
-		if (line[1] != 'E')
-			ft_error("syntaxe configh");
-	if (line[0] == 'E')
-		if (line[1] != 'A')
-			ft_error("syntaxe configh");
+	i = ft_strsub_bis(line, data);
 	while (line[i] == ' ')
 		i++;
-
 	str = malloc(sizeof(char) * ft_strlen(line) - i);
 	while (line[i + z] != '\0')
 	{
 		if (line[i + z] == ' ')
 		{
 			while (line[i + z] == ' ')
-			i++;
+				i++;
 			if (line[i + z] != '\0')
-				ft_error("syntaxe error");
+				ft_error("syntaxe error", data);
 			str[z] = '\0';
-			return str;
+			return (str);
 		}
 		str[z] = line[i + z];
 		z++;
 	}
 	str[z] = '\0';
-	return str;
+	return (str);
 }
 
-	
-	
-void   pars(data_t *data, char *line)
+void	pars(data_t *data, char *line)
 {
+	int nb;
+
+	nb = 0;
 	if (line[0] == 'R')
-		data->x = split(line, &data->y);
-	else if (line[0] == 'N') 
-		data->text_nord[3] =  ft_strsub(line);
-	else if (line[0] == 'S') 
+		data->x = split(line, &data->y, data, nb);
+	else if (line[0] == 'N')
+		data->text_nord[3] = ft_strsub(line, data);
+	else if (line[0] == 'S')
 	{
 		if (line[1] == 'O')
-			data->text_nord[0] =  ft_strsub(line);
-		else 
-			data->text_nord[4] = ft_strsub(line);
+			data->text_nord[0] = ft_strsub(line, data);
+		else
+			data->text_nord[4] = ft_strsub(line, data);
 	}
-	else if (line[0] == 'W') 
-		data->text_nord[1] =  ft_strsub(line);
-	
-	else if (line[0] == 'E') 
-		data->text_nord[2] =  ft_strsub(line);
-		
+	else if (line[0] == 'W')
+		data->text_nord[1] = ft_strsub(line, data);
+	else if (line[0] == 'E')
+		data->text_nord[2] = ft_strsub(line, data);
 	else if (line[0] == 'F')
-		data->couleur_sol = parse_s_p(line);
+		data->couleur_sol = parse_s_p(line, data);
 	else if (line[0] == 'C')
-		data->couleur_plafond = parse_s_p(line);
+		data->couleur_plafond = parse_s_p(line, data);
 }
 
 char	*recu_line(data_t *data, int x, int fd, char *tab)
@@ -248,7 +80,7 @@ char	*recu_line(data_t *data, int x, int fd, char *tab)
 		pars(data, line);
 		x = x + 1;
 		str = tab;
-		tab = ft_strjoin(str , line);
+		tab = ft_strjoin(str, line);
 		free(str);
 		str = tab;
 		tab = ft_strjoin(str, "\n");
@@ -258,15 +90,31 @@ char	*recu_line(data_t *data, int x, int fd, char *tab)
 	return (tab);
 }
 
-void	ft_pars_fichier(struct data_s *data)
+char	*ft_pars_fichier2(char *tab, char *line, data_t *data)
 {
-	char *line;
-	char *tab;
-	int fd;
-	int x;
 	char *str;
 
+	str = tab;
+	pars(data, line);
+	tab = ft_strjoin(str, line);
+	free(str);
+	free(line);
+	str = tab;
+	tab = ft_strjoin(str, "\n");
+	free(str);
+	return (tab);
+}
+
+void	ft_pars_fichier(struct data_s *data)
+{
+	char	*line;
+	char	*tab;
+	char	*str;
+	int		fd;
+	int		x;
+
 	x = 0;
+	str = NULL;
 	fd = open("element.cub", O_RDONLY);
 	get_next_line(fd, &line);
 	tab = ft_strjoin(str, line);
@@ -278,18 +126,9 @@ void	ft_pars_fichier(struct data_s *data)
 	free(line);
 	tab = recu_line(data, x, fd, tab);
 	while (get_next_line(fd, &line) == 1)
-	{
-		str = tab;
-		pars(data, line);
-		tab = ft_strjoin(str , line);
-		free(str);
-		free(line);
-		str = tab;
-		tab = ft_strjoin(str, "\n");
-		free(str);
-	}
+		tab = ft_pars_fichier2(tab, line, data);
 	data->map = ft_split((tab), '\n');
-	ft_check_pars(data->map);
+	ft_check_pars(data->map, data);
 	free(tab);
 	free(line);
 }
