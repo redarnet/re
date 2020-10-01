@@ -54,8 +54,7 @@ static int	*sortsprites(struct data_s data, int *sprite_order,
 	return (sprite_order);
 }
 
-void	ft_sprite2(struct data_s data, struct sprite_s sprite,
-		double *zbuffer, int *img_data2)
+void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
 {
 	int y;
 	int d;
@@ -70,7 +69,7 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite,
 		sprite.spritescreenx)) * texwidth / sprite.spritewidth) / 256;
 		y = sprite.drawstarty;
 		if (sprite.transformy > 0 && sprite.stripe > 0 && sprite.stripe
-				< data.x && sprite.transformy < zbuffer[sprite.stripe])
+				< data.x && sprite.transformy < data.zbuffer[sprite.stripe])
 			while (y < sprite.drawendy)
 			{
 				d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
@@ -104,14 +103,14 @@ void	ft_sprite1(struct data_s data, struct sprite_s *sprite)
 	sprite->stripe = sprite->drawstartx;
 }
 
-void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
+void	ft_sprite(struct data_s data, int *img_data2)
 {
 	int		i;
 	int		*spriteorder;
 	struct sprite_s	sprite;
 	double		spritedistance[data.numsprite];
 
-	spriteorder = (int*)malloc(sizeof(double) * data.numsprite + 1);
+	spriteorder = (int*)malloc(sizeof(double) * data.numsprite);
 	spriteorder = sortsprites(data, spriteorder,
 			spritedistance, data.numsprite);
 	i = data.numsprite;
@@ -128,7 +127,7 @@ void	ft_sprite(struct data_s data, double *zbuffer, int *img_data2)
 		sprite.spritescreenx = (int)((data.x / 2) *
 				(1 + sprite.transformx / sprite.transformy));
 		ft_sprite1(data, &sprite);
-		ft_sprite2(data, sprite, zbuffer, img_data2);
+		ft_sprite2(data, sprite, img_data2);
 		i--;
 	}
 }

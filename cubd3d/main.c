@@ -28,9 +28,7 @@ int		ft_quit(data_t *data)
 	if (data->map)
 		free(data->map);
 	if (data->map2)
-	{
 		ft_free_map(data->map2, data);
-	}
 	exit(5);
 	return (0);
 }
@@ -98,8 +96,10 @@ int		main(int argc, char **argv)
 	str = data.map;
 	data.count2 = checkmap(data);
 	data.map2 = change_map(str, data.count2, &data);
+	
 	ft_free_m(str, &data);
 	free(str);
 	cubd3d(&data, argv, argc);
+	
 	return (0);
 }

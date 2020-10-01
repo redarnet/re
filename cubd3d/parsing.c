@@ -12,17 +12,26 @@
 
 #include "cub3d.h"
 
-char	*ft_strsub(char *line, data_t *data)
+char	*ft_subtext(char *line, data_t *data)
 {
 	char	*str;
 	int		i;
 	int		z;
+	int y;
 
 	z = 0;
 	i = ft_strsub_bis(line, data);
+	y = i ;
+	while (line[i + z] != '\0')
+	{
+		if (line[i + z] == ' ')
+		y++;
+		z++;
+	}
 	while (line[i] == ' ')
 		i++;
-	str = malloc(sizeof(char) * ft_strlen(line) - i);
+	z = 0;
+	str = malloc(sizeof(char) * (ft_strlen(line) - y + 1));
 	while (line[i + z] != '\0')
 	{
 		if (line[i + z] == ' ')
@@ -49,18 +58,18 @@ void	pars(data_t *data, char *line)
 	if (line[0] == 'R')
 		data->x = split(line, &data->y, data, nb);
 	else if (line[0] == 'N')
-		data->text_nord[3] = ft_strsub(line, data);
+		data->text_nord[3] = ft_subtext(line, data);
 	else if (line[0] == 'S')
 	{
 		if (line[1] == 'O')
-			data->text_nord[0] = ft_strsub(line, data);
+			data->text_nord[0] = ft_subtext(line, data);
 		else
-			data->text_nord[4] = ft_strsub(line, data);
+			data->text_nord[4] = ft_subtext(line, data);
 	}
 	else if (line[0] == 'W')
-		data->text_nord[1] = ft_strsub(line, data);
+		data->text_nord[1] = ft_subtext(line, data);
 	else if (line[0] == 'E')
-		data->text_nord[2] = ft_strsub(line, data);
+		data->text_nord[2] = ft_subtext(line, data);
 	else if (line[0] == 'F')
 		data->couleur_sol = parse_s_p(line, data);
 	else if (line[0] == 'C')

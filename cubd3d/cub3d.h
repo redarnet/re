@@ -20,7 +20,6 @@
 typedef struct t_s
 {
 	int texture[6][64][64];
-	int size_l;
 	int i;
 	int x;
 	char *ptr;
@@ -61,8 +60,6 @@ typedef struct sprite_s
 	int drawendx;
 	int stripe;
 	int texx;
-	int y;
-	int d;
 	int texy;
 	int color2;
 
@@ -72,8 +69,6 @@ typedef struct sprite_s
 typedef struct data_s
 {
 	sprite_t *sprite;
-	//	struct sprite_s;
-	int buffer[500][500];
 	double zbuffer[500];
 	t_t text;
 	int texNum;
@@ -92,20 +87,10 @@ typedef struct data_s
 	int	couleur3;
 	float px;
 	float py;
-	int posy;
-	int posx;
-	float angle;
-	float rotate;
 	float speed;
-	int cmpx;
-	int cmpy;
 	int couleur_sol;
 	int couleur_plafond;
-	int green;
-	int red;
-	int blue;
 	double step;
-	int cmpr;
 	void *img_ptr;
 	int *img_data;
 	char *text_nord[5];
@@ -128,9 +113,6 @@ typedef struct data_s
 	int stepy;
 	float deltadirx;
 	float deltadiry;
-	int *d_ad;
-	int sl;
-	int sreenshot;
 	int count;
 	int count2;
 	int size_free;
@@ -143,16 +125,9 @@ int deal_key_map(int key, data_t *data);
 void	algo(data_t *data, int pix);
 void    ft_algo(struct data_s data, int *img_data2 , int texheight, double *zbuffer); 
 void	algo2(data_t *data);
-int	afficher_mur(int key,data_t *data);
-void	ft_sprite(struct data_s data, double *ZBuffer, int *img_data2);
-void	remplir_blanc(struct data_s data);
-void	move_player(int nb, data_t *data);
+void	ft_sprite(struct data_s data, int *img_data2);
 double abss(double a);
 void save_bmp(struct data_s data);
-//int *sortSprites(struct data_s data, int *sprite_order, double *sprite_distance, int sprite_nb);
-void	ft_affiche_map(data_t *data);
-int	affiche_bousole(int key, data_t *data);
-void	line(struct data_s data, int x1, int y1, int x2, int y2, int couleur);
 void	ft_draw_walls(struct data_s data);
 void	plafond(data_t *img, data_t *data);
 void	sol(data_t *img, data_t *data);
@@ -163,6 +138,7 @@ char *ft_itoa_base(int nb, char *str);
 void    move(int key, data_t *data);
 int ft_quit(data_t *data);
 void ft_error(char *str, data_t *data);
+void ft_error2(char *str);
 int checkmap(struct data_s data);
 int	split(char *line, int *y, data_t *data, int nb);
 char	*ft_strcat(char *s1, const char *s2);

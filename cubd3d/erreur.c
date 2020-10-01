@@ -14,7 +14,14 @@
 
 void	ft_error(char *str, data_t *data)
 {
-	ft_putstr_fd("Error\n", 1);
 	ft_putstr_fd(str, 1);
+	ft_putstr_fd("Error\n", 1);
 	ft_quit(data);
+}
+
+void	ft_error2(char *str)
+{
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd("Error\n", 1);
+	exit(5);
 }

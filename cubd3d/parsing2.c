@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	ft_double_start(char **str, char c, data_t *data)
+void	ft_double_start(char **str, char c)
 {
 	int i;
 
@@ -25,9 +25,10 @@ void	ft_double_start(char **str, char c, data_t *data)
 			while (str[i] != 0)
 			{
 				if (str[i][0] == c)
-					ft_error("bad syntaxee", data);
+					ft_error2("bad syntaxee");
 				i++;
 			}
+			break;
 		}
 		i++;
 	}
@@ -76,11 +77,11 @@ void	ft_syntaxe(char **str, data_t *data)
 
 void	ft_check_pars(char **str, data_t *data)
 {
-	ft_double_start(str, 'R', data);
-	ft_double_start(str, 'W', data);
-	ft_double_start(str, 'E', data);
-	ft_double_start(str, 'C', data);
-	ft_double_start(str, 'F', data);
+	ft_double_start(str, 'R');
+	ft_double_start(str, 'W');
+	ft_double_start(str, 'E');
+	ft_double_start(str, 'C');
+	ft_double_start(str, 'F');
 	ft_syntaxe(str, data);
 }
 
@@ -109,6 +110,6 @@ int	split(char *line, int *y, data_t *data, int nb)
 	while (line[i] == ' ')
 		i++;
 	if (line[i] != '\0')
-		ft_error("syntaxe config", data);
+		ft_error2("syntaxe config");
 	return (nb);
 }

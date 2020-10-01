@@ -103,7 +103,7 @@ void	ft_draw_walls(struct data_s data)
 	plafond(img, &data);
 	sol(img, &data);
 	ft_algo(data, img->img_data, texheight, data.zbuffer);
-	ft_sprite(data, data.zbuffer, img->img_data);
+	ft_sprite(data, img->img_data);
 	mlx_put_image_to_window(img->mlx_ptr, img->win_ptr, img->img_ptr, 0, 0);
 	lmlx_destroy_image(img);
 }

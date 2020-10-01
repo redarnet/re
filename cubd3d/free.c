@@ -36,4 +36,5 @@ void    ft_free_m(char **map, data_t *data)
                         free(map[x]);
                 x++;
         }
+	free(map);
 }

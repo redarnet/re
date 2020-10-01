@@ -69,7 +69,12 @@ int		**change_map2(char **map, int **str, int count, int i)
 	int x;
 	int z;
 
-	x = count;
+	x = 0;
+	while (x != count)
+	{
+		str[x] = NULL;
+		x++;
+	}
 	while (map[x] != 0)
 	{
 		z = 0;
@@ -85,8 +90,11 @@ int		**change_map2(char **map, int **str, int count, int i)
 				str[x + 1][z + 1] = 1;
 			z++;
 		}
+			ft_putnbr_fd(z, 1);
+			ft_putchar_fd('\n', 1);
 		x++;
 	}
+	str[x] = 0;
 	return (str);
 }
 
@@ -102,15 +110,18 @@ int		**change_map(char **map, int count, data_t *data)
 		i++;
 	data->size_free = i;
 	str = (int**)malloc(sizeof(int*) * i + 1);
-	i = 0;
+	i = count;
 	while (map[i] != 0)
 	{
 		y = 0;
 		while (map[i][y] != '\0')
 			y++;
+		ft_putnbr_fd(y, 1);
+		ft_putchar_fd('\n', 1);
 		str[i + 1] = (int*)malloc(sizeof(int) * y + 1);
 		i++;
 	}
+		ft_putchar_fd('\n', 1);
 	str = change_map2(map, str, count, i);
 	return (str);
 }

@@ -68,7 +68,7 @@ void save_bmp(struct data_s data)
         plafond(img, &data);
         sol(img, &data);
         ft_algo(data, img->img_data, texheight, data.zbuffer);
-        ft_sprite(data, data.zbuffer, img->img_data);
+        ft_sprite(data, img->img_data);
 
 	 bmp = init_bmp(&data);
 	 mlx_destroy_image(data.mlx_ptr, data.win_ptr);
