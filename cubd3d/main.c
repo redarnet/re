@@ -25,8 +25,6 @@ int		ft_quit(data_t *data)
 	}
 	if (data->sprite)
 		free(data->sprite);
-	if (data->map)
-		free(data->map);
 	if (data->map2)
 		ft_free_map(data->map2, data);
 	exit(5);
@@ -58,6 +56,7 @@ void	init_ray(struct data_s *data)
 	data->y2 = 0;
 	data->texPos = 0;
 	data->stepy = 0;
+	data->count = 0;
 }
 
 void	cubd3d(struct data_s *data, char **argv, int argc)
@@ -80,6 +79,7 @@ void	cubd3d(struct data_s *data, char **argv, int argc)
 		mlx_loop(data->mlx_ptr);
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		free(data);
 	}
 	ft_quit(data);
 }
@@ -91,15 +91,20 @@ int		main(int argc, char **argv)
 
 	init_ray(&data);
 	ft_pars_fichier(&data);
+	data.count2 = start_map(data);
 	pos_perso(&data);
 	tex_sprite(&data);
 	str = data.map;
-	data.count2 = checkmap(data);
+	checkmap2(&data);
 	data.map2 = change_map(str, data.count2, &data);
 	
-	ft_free_m(str, &data);
-	free(str);
+	if (data.map)
+		ft_free_m(data.map);
+	
 	cubd3d(&data, argv, argc);
+	
+	ft_quit(&data);
+
 	
 	return (0);
 }

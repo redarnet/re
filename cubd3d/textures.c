@@ -18,7 +18,7 @@ void	tex_sprite(data_t *data)
 	int	y;
 	int	z;
 
-	y = 0;
+	y = data->count2;
 	z = 0;
 	data->sprite = (sprite_t*)malloc(sizeof(sprite_t) * data->numsprite + 1);
 	while (data->map[y] != 0)
@@ -26,11 +26,9 @@ void	tex_sprite(data_t *data)
 		i = 0;
 		while (data->map[y][i] != '\0')
 		{
-			if ((data->map[y][0] != 'F') && (data->map[y][0] != 'C')
-				&& (data->map[y][0] != 'R'))
 				if (data->map[y][i] == '2')
 				{
-					data->sprite[z].posy = y + 1.5;
+					data->sprite[z].posy = y - data->count2 + 1.5;
 					data->sprite[z].posx = i + 1.5;
 					data->map[y][i] = '0';
 					z++;

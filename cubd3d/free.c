@@ -17,20 +17,21 @@ void    ft_free_map(int **map, data_t *data)
         int x;
 
         x = 1;
-        while (x != data->size_free + 1)
+        while (x != data->size_free)
         {
                 if (map[x])
                         free(map[x]);
                 x++;
         }
+	free(map);
 }
 
-void    ft_free_m(char **map, data_t *data)
+void    ft_free_m(char **map)
 {
         int x;
 
         x = 0;
-        while (x != data->size_free)
+        while (map[x] != 0)
         {
                 if (map[x])
                         free(map[x]);

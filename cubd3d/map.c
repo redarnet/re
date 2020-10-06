@@ -40,22 +40,21 @@ void	pos_perso(struct data_s *data)
 	int x;
 	int y;
 
-	y = 0;
+	y = data->count2;
 	data->numsprite = 0;
 	while (data->map[y] != 0)
 	{
 		x = 0;
 		while (data->map[y][x] != '\0')
 		{
-			if ((data->map[y][0] != 'F') && (data->map[y][0] != 'C')
-				&& (data->map[y][0] != 'R'))
 				if (data->map[y][x] == '2')
 					data->numsprite = data->numsprite + 1;
 			if (data->map[y][x] == 'N' || data->map[y][x] == 'S' ||
 					data->map[y][x] == 'E' || data->map[y][x] == 'O')
 			{
 				data->py = x + 1.5;
-				data->px = y + 1.5;
+				data->px = y  -data->count2 + 1.5;
+				ft_putnbr_fd(data->px, 1);
 				rotate_start(data, data->map[y][x]);
 			}
 			x++;
@@ -69,59 +68,48 @@ int		**change_map2(char **map, int **str, int count, int i)
 	int x;
 	int z;
 
-	x = 0;
-	while (x != count)
-	{
-		str[x] = NULL;
-		x++;
-	}
+	x = count;
 	while (map[x] != 0)
 	{
 		z = 0;
 		while (map[x][z] != '\0')
 		{
-			str[x + 1][z + 1] = map[x][z] - '0';
-			if ((str[x + 1][z + 1] == 'N' - 48)
-					|| (str[x + 1][z + 1] == 'S' - 48)
-					|| (str[x + 1][z + 1] == 'O' - 48)
-					|| (str[x + 1][z + 1] == 'E' - 48))
-				str[x + 1][z + 1] = 0;
-			if (x == i - 1)
-				str[x + 1][z + 1] = 1;
+			str[x - count+ 1][z + 1] = map[x][z] - '0';
+			  if ((str[x -count + 1][z + 1] == 'N' - 48)
+                                        || (str[x - count + 1][z + 1] == 'S' - 48)
+                                        || (str[x - count + 1][z + 1] == 'O' - 48)
+                                        || (str[x - count + 1][z + 1] == 'E' - 48))
+                                str[x - count + 1][z + 1] = 0;
 			z++;
 		}
-			ft_putnbr_fd(z, 1);
-			ft_putchar_fd('\n', 1);
 		x++;
 	}
-	str[x] = 0;
 	return (str);
 }
 
 int		**change_map(char **map, int count, data_t *data)
 {
 	int i;
-	int y;
 	int **str;
+	int z;
 
 	i = count;
-	y = 0;
-	while (map[i] != 0)
+	while(map[i] != 0)
 		i++;
+	i = i - count + 2;
+	str = (int**)malloc(sizeof(int*) *(i));
 	data->size_free = i;
-	str = (int**)malloc(sizeof(int*) * i + 1);
 	i = count;
 	while (map[i] != 0)
 	{
-		y = 0;
-		while (map[i][y] != '\0')
-			y++;
-		ft_putnbr_fd(y, 1);
-		ft_putchar_fd('\n', 1);
-		str[i + 1] = (int*)malloc(sizeof(int) * y + 1);
+		z = 0;
+		while(map[i][z] != '\0')
+			z++;
+		z++;
+		str[i - count + 1] = (int*)malloc(sizeof(int) * z);
 		i++;
 	}
-		ft_putchar_fd('\n', 1);
+		str[i - count + 1] = (int*)malloc(sizeof(int) * 1);
 	str = change_map2(map, str, count, i);
 	return (str);
 }

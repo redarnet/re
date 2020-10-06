@@ -37,9 +37,10 @@ int	*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
 }
 
 static int	*sortsprites(struct data_s data, int *sprite_order,
-		double *sprite_distance, int sprite_nb)
+		 int sprite_nb)
 {
 	int		i;
+	double		sprite_distance[data.numsprite];
 
 	i = 0;
 	while (i < data.numsprite)
@@ -108,21 +109,20 @@ void	ft_sprite(struct data_s data, int *img_data2)
 	int		i;
 	int		*spriteorder;
 	struct sprite_s	sprite;
-	double		spritedistance[data.numsprite];
 
-	spriteorder = (int*)malloc(sizeof(double) * data.numsprite);
+	spriteorder = (int*)malloc(sizeof(int) * data.numsprite);
 	spriteorder = sortsprites(data, spriteorder,
-			spritedistance, data.numsprite);
-	i = data.numsprite;
+			 data.numsprite);
+	i = data.numsprite - 1;
 	while (i >= 0)
 	{
 		sprite.spritex = data.sprite[spriteorder[i]].posy - data.px;
 		sprite.spritey = data.sprite[spriteorder[i]].posx - data.py;
-		sprite.invdet = 1.0 / (data.planeX *
-				data.dirY - data.dirX * data.planeY);
-		sprite.transformx = sprite.invdet *
+		sprite.transformx = 1.0 / (data.planeX *
+				data.dirY - data.dirX * data.planeY) *
 			(data.dirY * sprite.spritex - data.dirX * sprite.spritey);
-		sprite.transformy = sprite.invdet *
+		sprite.transformy = 1.0 / (data.planeX *
+				data.dirY - data.dirX * data.planeY) *
 			(-data.planeY * sprite.spritex + data.planeX * sprite.spritey);
 		sprite.spritescreenx = (int)((data.x / 2) *
 				(1 + sprite.transformx / sprite.transformy));
@@ -130,4 +130,5 @@ void	ft_sprite(struct data_s data, int *img_data2)
 		ft_sprite2(data, sprite, img_data2);
 		i--;
 	}
+	free(spriteorder);
 }
