@@ -31,7 +31,8 @@ char	*ft_subtext(char *line, data_t *data)
 	while (line[i] == ' ')
 		i++;
 	z = 0;
-	str = malloc(sizeof(char) * (ft_strlen(line) - y + 1));
+	if(!(str = malloc(sizeof(char) * (ft_strlen(line) - y + 1))))
+			return (NULL);
 	while (line[i + z] != '\0')
 	{
 		if (line[i + z] == ' ')
@@ -114,7 +115,7 @@ char	*ft_pars_fichier2(char *tab, char *line, data_t *data)
 	return (tab);
 }
 
-void	ft_pars_fichier(struct data_s *data)
+void	ft_pars_fichier(struct data_s *data, char *argv)
 {
 	char	*line;
 	char	*tab;
@@ -124,7 +125,7 @@ void	ft_pars_fichier(struct data_s *data)
 
 	x = 0;
 	str = NULL;
-	fd = open("element.cub", O_RDONLY);
+	fd = open(argv, O_RDONLY);
 	get_next_line(fd, &line);
 	tab = ft_strjoin(str, line);
 	free(str);

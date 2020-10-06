@@ -41,24 +41,26 @@ SRC  = algo.c \
 OBJS = $(SRC:.c=.o)
 
 
-all: minilibx libft $(NAME) 
+all:  $(NAME) 
 
-libft: 
-	make -c libft re 
 
 minilibx:
-	make -C minilibx-linux/
 
 $(%.o): $(%.c)
 	$(CC) -o $@  $^ 
 
 $(NAME): $(OBJS)
-	$(CC) -o $@  $^ $(MLX) -L./libft -lft  
+	make -C libft
+	make -C minilibx-linux/
+	$(CC)  -o $@  $^  libft/libft.a $(MLX)   
 
 clean: 
 	make -C libft/ clean 
+	make -C minilibx-linux/ clean 
 	rm $(OBJS)
 fclean: 
 	make -C libft/ fclean 
+	make -C minilibx-linux/ clean 
 	rm $(OBJS)
+	rm $(NAME)
 re: fclean all
