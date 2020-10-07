@@ -107,7 +107,7 @@ void	checkmap2(data_t *data)
 	}
 }
 
-int	start_map(struct data_s data)
+int		start_map(struct data_s data)
 {
 	int x;
 	int y;

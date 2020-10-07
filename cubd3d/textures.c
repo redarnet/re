@@ -26,13 +26,13 @@ void	tex_sprite(data_t *data)
 		i = 0;
 		while (data->map[y][i] != '\0')
 		{
-				if (data->map[y][i] == '2')
-				{
-					data->sprite[z].posy = y - data->count2 + 1.5;
-					data->sprite[z].posx = i + 1.5;
-					data->map[y][i] = '0';
-					z++;
-				}
+			if (data->map[y][i] == '2')
+			{
+				data->sprite[z].posy = y - data->count2 + 1.5;
+				data->sprite[z].posx = i + 1.5;
+				data->map[y][i] = '0';
+				z++;
+			}
 			i++;
 		}
 		y++;
@@ -70,13 +70,13 @@ data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
 	}
 	new->img_ptr = temp;
 	new->img_data = (int*)mlx_get_data_addr(temp,
-		&new->bpp, &new->size_l, &endian);
+			&new->bpp, &new->size_l, &endian);
 	new->text.ptr = mlx_get_data_addr(temp,
 			&new->bpp, &new->size_l, &endian);
 	return (new);
 }
 
-t_t	textures_bis(data_t *img, data_t *data)
+t_t		textures_bis(data_t *img, data_t *data)
 {
 	int l;
 	int y;
@@ -85,7 +85,7 @@ t_t	textures_bis(data_t *img, data_t *data)
 	while (y != 64)
 	{
 		l = *(int*)(img->text.ptr + img->size_l *
-			data->text.x + img->bpp / 8 * y);
+				data->text.x + img->bpp / 8 * y);
 		data->text.texture[data->text.i][data->text.x][y] = l;
 		y++;
 	}

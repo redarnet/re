@@ -17,22 +17,11 @@ char	*ft_subtext(char *line, data_t *data)
 	char	*str;
 	int		i;
 	int		z;
-	int y;
 
+	i = ft_subtext2(line, data);
+	if (!(str = malloc(sizeof(char) * (ft_strlen(line) - data->u + 1))))
+		return (NULL);
 	z = 0;
-	i = ft_strsub_bis(line, data);
-	y = i ;
-	while (line[i + z] != '\0')
-	{
-		if (line[i + z] == ' ')
-		y++;
-		z++;
-	}
-	while (line[i] == ' ')
-		i++;
-	z = 0;
-	if(!(str = malloc(sizeof(char) * (ft_strlen(line) - y + 1))))
-			return (NULL);
 	while (line[i + z] != '\0')
 	{
 		if (line[i + z] == ' ')
@@ -125,7 +114,8 @@ void	ft_pars_fichier(struct data_s *data, char *argv)
 
 	x = 0;
 	str = NULL;
-	fd = open(argv, O_RDONLY);
+	if ((fd = open(argv, O_RDONLY)) == -1)
+		ft_error2("oppen error");
 	get_next_line(fd, &line);
 	tab = ft_strjoin(str, line);
 	free(str);

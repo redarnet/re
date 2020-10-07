@@ -24,7 +24,7 @@ void	move2(int key, data_t *data)
 	double movespeed;
 
 	movespeed = 0.2;
-	if (key == key_w)
+	if (key == KEY_W)
 	{
 		if (move_pos(data->map2[(int)(data->px - data->dirY
 						* movespeed)][(int)(data->py)]))
@@ -33,7 +33,7 @@ void	move2(int key, data_t *data)
 						* movespeed)]))
 			data->py += data->dirX * movespeed * 0.5;
 	}
-	if (key == key_d)
+	if (key == KEY_D)
 	{
 		if (move_pos(data->map2[(int)(data->px + data->dirY
 						* movespeed)][(int)(data->py)]))
@@ -49,7 +49,7 @@ void	move(int key, data_t *data)
 	double movespeed;
 
 	movespeed = 0.2;
-	if (key == key_a)
+	if (key == KEY_A)
 	{
 		if (move_pos(data->map2[(int)(data->px + data->dirX
 						* movespeed)][(int)(data->py)]))
@@ -58,7 +58,7 @@ void	move(int key, data_t *data)
 						* movespeed)]))
 			data->py += data->dirY * movespeed * 0.5;
 	}
-	if (key == key_s)
+	if (key == KEY_S)
 	{
 		if (move_pos(data->map2[(int)(data->px - data->dirX
 						* movespeed)][(int)(data->py)]))
@@ -75,7 +75,7 @@ void	rotate(int key, data_t *data, double rotspeed)
 	double olddirx;
 	double oldplanex;
 
-	if (key == key_fd)
+	if (key == KEY_FD)
 	{
 		olddirx = data->dirX;
 		data->dirX = data->dirX * cos(-rotspeed) - data->dirY * sin(-rotspeed);
@@ -86,7 +86,7 @@ void	rotate(int key, data_t *data, double rotspeed)
 		data->planeY = oldplanex * sin(-rotspeed) +
 			data->planeY * cos(-rotspeed);
 	}
-	if (key == key_fg)
+	if (key == KEY_FG)
 	{
 		olddirx = data->dirX;
 		data->dirX = data->dirX * cos(rotspeed) - data->dirY * sin(rotspeed);

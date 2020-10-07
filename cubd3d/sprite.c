@@ -59,10 +59,9 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
 {
 	int y;
 	int d;
-	int texheight;
 	int texwidth;
 
-	texheight = 64;
+	data.texheight = 64;
 	texwidth = 64;
 	while (sprite.stripe < sprite.drawendx)
 	{
@@ -74,7 +73,7 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
 			while (y < sprite.drawendy)
 			{
 				d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
-				sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
+				sprite.texy = ((d * data.texheight) / sprite.spriteheight) / 256;
 				sprite.color2 = data.text.texture[4][0][texwidth *
 					sprite.texy + sprite.texx];
 				if ((sprite.color2 & 0x00FFFFFF) != 0)

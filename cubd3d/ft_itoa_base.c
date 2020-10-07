@@ -12,6 +12,25 @@
 
 #include "cub3d.h"
 
+int		ft_subtext2(char *line, data_t *data)
+{
+	int i;
+	int z;
+
+	i = ft_strsub_bis(line, data);
+	z = 0;
+	data->u = i;
+	while (line[i + z] != '\0')
+	{
+		if (line[i + z] == ' ')
+			data->u++;
+		z++;
+	}
+	while (line[i] == ' ')
+		i++;
+	return (i);
+}
+
 int		taille_malloc(int nbr, char *base)
 {
 	int len;

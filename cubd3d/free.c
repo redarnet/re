@@ -12,30 +12,30 @@
 
 #include "cub3d.h"
 
-void    ft_free_map(int **map, data_t *data)
+void	ft_free_map(int **map, data_t *data)
 {
-        int x;
+	int x;
 
-        x = 1;
-        while (x != data->size_free)
-        {
-                if (map[x])
-                        free(map[x]);
-                x++;
-        }
+	x = 1;
+	while (x != data->size_free)
+	{
+		if (map[x])
+			free(map[x]);
+		x++;
+	}
 	free(map);
 }
 
-void    ft_free_m(char **map)
+void	ft_free_m(char **map)
 {
-        int x;
+	int x;
 
-        x = 0;
-        while (map[x] != 0)
-        {
-                if (map[x])
-                        free(map[x]);
-                x++;
-        }
+	x = 0;
+	while (map[x] != 0)
+	{
+		if (map[x])
+			free(map[x]);
+		x++;
+	}
 	free(map);
 }
