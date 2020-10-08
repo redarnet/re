@@ -28,13 +28,13 @@ void	ft_double_start(char **str, char c)
 					ft_error2("bad syntaxee");
 				i++;
 			}
-			break;
+			break ;
 		}
 		i++;
 	}
 }
 
-int	first_letter(char c, int count, int i, data_t *data)
+int		first_letter(char c, int count, int i, data_t *data)
 {
 	if ((c == 'N' || c == 'R' || c == 'S' || c == 'W' || c == 'E'
 		|| c == 'F' || c == 'C') && i == 0)
@@ -85,7 +85,7 @@ void	ft_check_pars(char **str, data_t *data)
 	ft_syntaxe(str, data);
 }
 
-int	split(char *line, int *y, data_t *data, int nb)
+int		split(char *line, int *y, data_t *data, int nb)
 {
 	int	i;
 

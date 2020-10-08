@@ -57,6 +57,8 @@ void	init_ray(struct data_s *data)
 	data->texpos = 0;
 	data->stepy = 0;
 	data->count = 0;
+	data->red = 0;
+	data->green = 0;
 }
 
 void    cubsave(struct data_s *data)

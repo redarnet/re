@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int	*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
+int		*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
 {
 	int		i;
 	int		tmp_order;
@@ -36,10 +36,10 @@ int	*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
 	return (sprite_order);
 }
 
-static int	*sortsprites(struct data_s data, int *sprite_order,
-		 int sprite_nb)
+int		*sortsprites(struct data_s data, int *sprite_order,
+	int sprite_nb)
 {
-	int		i;
+	int			i;
 	double		sprite_distance[data.numsprite];
 
 	i = 0;
@@ -59,23 +59,22 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
 {
 	int y;
 	int d;
-	int texheight;
-	int texwidth;
 
-	texheight = 64;
-	texwidth = 64;
+	data.texheight = 64;
+	data.texwidth = 64;
 	while (sprite.stripe < sprite.drawendx)
 	{
 		sprite.texx = (int)(256 * (sprite.stripe - (-sprite.spritewidth / 2 +
-		sprite.spritescreenx)) * texwidth / sprite.spritewidth) / 256;
+		sprite.spritescreenx)) * data.texwidth / sprite.spritewidth) / 256;
 		y = sprite.drawstarty;
 		if (sprite.transformy > 0 && sprite.stripe > 0 && sprite.stripe
 				< data.x && sprite.transformy < data.zbuffer[sprite.stripe])
 			while (y < sprite.drawendy)
 			{
 				d = (y) * 256 - data.y * 128 + sprite.spriteheight * 128;
-				sprite.texy = ((d * texheight) / sprite.spriteheight) / 256;
-				sprite.color2 = data.text.texture[4][0][texwidth *
+				sprite.texy = ((d * data.texheight) /
+					sprite.spriteheight) / 256;
+				sprite.color2 = data.text.texture[4][0][data.texwidth *
 					sprite.texy + sprite.texx];
 				if ((sprite.color2 & 0x00FFFFFF) != 0)
 					img_data2[y * data.x + sprite.stripe] = sprite.color2;
@@ -106,13 +105,13 @@ void	ft_sprite1(struct data_s data, struct sprite_s *sprite)
 
 void	ft_sprite(struct data_s data, int *img_data2)
 {
-	int		i;
-	int		*spriteorder;
+	int				i;
+	int				*spriteorder;
 	struct sprite_s	sprite;
 
 	spriteorder = (int*)malloc(sizeof(int) * data.numsprite);
 	spriteorder = sortsprites(data, spriteorder,
-			 data.numsprite);
+		data.numsprite);
 	i = data.numsprite - 1;
 	while (i >= 0)
 	{

@@ -12,32 +12,32 @@
 
 #include "cub3d.h"
 
-char    *ft_subtext(char *line, data_t *data)
+char	*ft_subtext(char *line, data_t *data)
 {
-        char    *str;
-        int             i;
-        int             z;
+	char	*str;
+	int		i;
+	int		z;
 
-        i = ft_subtext2(line, data);
-        if (!(str = malloc(sizeof(char) * (ft_strlen(line) - data->u + 1))))
-                return (NULL);
-        z = 0;
-        while (line[i + z] != '\0')
-        {
-                if (line[i + z] == ' ')
-                {
-                        while (line[i + z] == ' ')
-                                i++;
-                        if (line[i + z] != '\0')
-                                ft_error("syntaxe error", data);
-                        str[z] = '\0';
-                        return (str);
-                }
-                str[z] = line[i + z];
-                z++;
-        }
-        str[z] = '\0';
-        return (str);
+	i = ft_subtext2(line, data);
+	if (!(str = malloc(sizeof(char) * (ft_strlen(line) - data->u + 1))))
+		return (NULL);
+	z = 0;
+	while (line[i + z] != '\0')
+	{
+		if (line[i + z] == ' ')
+		{
+			while (line[i + z] == ' ')
+				i++;
+			if (line[i + z] != '\0')
+				ft_error("syntaxe error", data);
+			str[z] = '\0';
+			return (str);
+		}
+		str[z] = line[i + z];
+		z++;
+	}
+	str[z] = '\0';
+	return (str);
 }
 
 void	pars(data_t *data, char *line)
