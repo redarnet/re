@@ -67,8 +67,8 @@ void	algo(data_t *data, int pix)
 	data->mapx = (int)data->px;
 	data->mapy = (int)data->py;
 	camerax = 2 * pix / (double)(data->x) - 1;
-	data->raydirx = data->dirX + data->planeX * camerax;
-	data->raydiry = data->dirY + data->planeY * camerax;
+	data->raydirx = data->dirx + data->planex * camerax;
+	data->raydiry = data->diry + data->planey * camerax;
 	data->deltadirx = sqrt(1 + (data->raydiry * data->raydiry)
 		/ (data->raydirx * data->raydirx));
 	data->deltadiry = sqrt(1 + (data->raydirx * data->raydirx) /

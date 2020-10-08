@@ -35,18 +35,18 @@ void	algo2(data_t *data)
 	drawstart = -lineheight / 2 + data->y / 2;
 	if (drawstart < 0)
 		drawstart = 0;
-	data->drawEnd = lineheight / 2 + data->y / 2;
-	if (data->drawEnd >= data->y)
-		data->drawEnd = data->y - 1;
+	data->drawend = lineheight / 2 + data->y / 2;
+	if (data->drawend >= data->y)
+		data->drawend = data->y - 1;
 	wallx = algo2bis(data);
 	wallx -= (int)wallx;
-	data->texX = (wallx * (double)tex);
+	data->texx = (wallx * (double)tex);
 	if (data->side == 0 && data->raydirx > 0)
-		data->texX = tex - data->texX - 1;
+		data->texx = tex - data->texx - 1;
 	if (data->side == 1 && data->raydiry < 0)
-		data->texX = tex - data->texX - 1;
+		data->texx = tex - data->texx - 1;
 	data->step = 1.0 * tex / lineheight;
-	data->texPos = (drawstart - data->y / 2 + lineheight / 2) * data->step;
+	data->texpos = (drawstart - data->y / 2 + lineheight / 2) * data->step;
 	data->y2 = drawstart;
-	data->texNum = data->map2[data->mapx][data->mapy];
+	data->texnum = data->map2[data->mapx][data->mapy];
 }

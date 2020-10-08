@@ -1,18 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   save.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redarnet <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/06 14:44:11 by redarnet          #+#    #+#             */
-/*   Updated: 2020/07/22 13:19:24 by user42           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
-void	write_file(int fd, t_bmp bmp)
+void save()
+{
+	ft_putstr_fd("1", 1);
+}
+
+static void		write_file(int fd, t_bmp bmp)
 {
 	int x;
 	int y;
@@ -40,8 +33,7 @@ void	write_file(int fd, t_bmp bmp)
 		y--;
 	}
 }
-
-t_bmp	init_bmp(struct data_s *data)
+static t_bmp	init_bmp(struct data_s *data)
 {
 	t_bmp bmp;
 
@@ -61,24 +53,25 @@ t_bmp	init_bmp(struct data_s *data)
 	return (bmp);
 }
 
-void	save_bmp(struct data_s data)
+void save_bmp(struct data_s data)
 {
-	int		fd;
-	int		texheight;
-	data_t	*img;
-	t_bmp	bmp;
+	int fd;
+	int texheight;
+	data_t *img;
 
+	t_bmp bmp;
 	texheight = 64;
-	if ((fd = open("save.bmp", O_RDWR | O_CREAT, S_IRWXU)) == -1)
-		ft_error2("erreur open");
+	if((fd = open("save.bmp", O_RDWR | O_CREAT, S_IRWXU)) == -1)
+	save();
 	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);
-	texheight = 64;
-	plafond(img, &data);
-	sol(img, &data);
-	ft_algo(data, img->img_data, texheight, data.zbuffer);
-	ft_sprite(data, img->img_data);
-	bmp = init_bmp(img);
-	write_file(fd, bmp);
-	close(fd);
+        texheight = 64;
+        plafond(img, &data);
+        sol(img, &data);
+        ft_algo(data, img->img_data, texheight, data.zbuffer);
+        ft_sprite(data, img->img_data);
+	 bmp = init_bmp(img);
+	 write_file(fd, bmp);
+	 close(fd);
 	lmlx_destroy_image(img);
 }
+	 

@@ -27,6 +27,7 @@ int		ft_atoi2(char *str)
 	return (x);
 }
 
+
 int		rgb_hex(int red, int green, int blue, data_t *data)
 {
 	char	*red2;
@@ -54,44 +55,41 @@ int		rgb_hex(int red, int green, int blue, data_t *data)
 	return (data->couleur1);
 }
 
-int		parse_s_p2(char *line, data_t *data, int i)
+int     parse_s_p(char *line, data_t *data)
 {
-	data->red = 0;
-	data->green = 0;
-	while (line[i] == ' ')
-		i++;
-	while (line[i] >= '0' && line[i] <= '9')
-	{
-		data->red = data->red * 10 - '0' + line[i];
-		i++;
-	}
-	if (line[i] != ',')
-		ft_error("syntaxe couleur", data);
-	i++;
-	while (line[i] >= '0' && line[i] <= '9')
-	{
-		data->green = data->green * 10 - '0' + line[i];
-		i++;
-	}
-	return (i);
-}
+        int i;
+        int red;
+        int green;
+        int blue;
+        int x;
 
-int		parse_s_p(char *line, data_t *data)
-{
-	int i;
-	int x;
-
-	data->blue = 0;
-	i = 1;
-	i = parse_s_p2(line, data, i);
-	if (line[i] != ',')
-		ft_error("syntaxe couleur", data);
-	i++;
-	while (line[i] >= '0' && line[i] <= '9')
-	{
-		data->blue = data->blue * 10 - '0' + line[i];
-		i++;
-	}
-	x = rgb_hex(data->red, data->green, data->blue, data);
-	return (x);
+        red = 0;
+        green = 0;
+        blue = 0;
+        i = 1;
+        while (line[i] == ' ')
+                i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                red = red * 10 - '0' + line[i];
+                i++;
+        }
+        if (line[i] != ',')
+                ft_error("syntaxe couleur", data);
+        i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                green = green * 10 - '0' + line[i];
+                i++;
+        }
+        if (line[i] != ',')
+                ft_error("syntaxe couleur", data);
+        i++;
+        while (line[i] >= '0' && line[i] <= '9')
+        {
+                blue = blue * 10 - '0' + line[i];
+                i++;
+        }
+        x = rgb_hex(red, green, blue, data);
+        return (x);
 }

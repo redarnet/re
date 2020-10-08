@@ -26,21 +26,21 @@ void	move2(int key, data_t *data)
 	movespeed = 0.2;
 	if (key == KEY_W)
 	{
-		if (move_pos(data->map2[(int)(data->px - data->dirY
+		if (move_pos(data->map2[(int)(data->px - data->diry
 						* movespeed)][(int)(data->py)]))
-			data->px -= data->dirY * movespeed * 0.5;
-		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->dirX
+			data->px -= data->diry * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->dirx
 						* movespeed)]))
-			data->py += data->dirX * movespeed * 0.5;
+			data->py += data->dirx * movespeed * 0.5;
 	}
 	if (key == KEY_D)
 	{
-		if (move_pos(data->map2[(int)(data->px + data->dirY
+		if (move_pos(data->map2[(int)(data->px + data->diry
 						* movespeed)][(int)(data->py)]))
-			data->px += data->dirY * movespeed * 0.5;
-		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->dirX
+			data->px += data->diry * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->dirx
 						* movespeed)]))
-			data->py -= data->dirX * movespeed * 0.5;
+			data->py -= data->dirx * movespeed * 0.5;
 	}
 }
 
@@ -51,21 +51,21 @@ void	move(int key, data_t *data)
 	movespeed = 0.2;
 	if (key == KEY_A)
 	{
-		if (move_pos(data->map2[(int)(data->px + data->dirX
+		if (move_pos(data->map2[(int)(data->px + data->dirx
 						* movespeed)][(int)(data->py)]))
-			data->px += data->dirX * movespeed * 0.5;
-		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->dirY
+			data->px += data->dirx * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py + data->diry
 						* movespeed)]))
-			data->py += data->dirY * movespeed * 0.5;
+			data->py += data->diry * movespeed * 0.5;
 	}
 	if (key == KEY_S)
 	{
-		if (move_pos(data->map2[(int)(data->px - data->dirX
+		if (move_pos(data->map2[(int)(data->px - data->dirx
 						* movespeed)][(int)(data->py)]))
-			data->px -= data->dirX * movespeed * 0.5;
-		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->dirY
+			data->px -= data->dirx * movespeed * 0.5;
+		if (move_pos(data->map2[(int)(data->px)][(int)(data->py - data->diry
 						* movespeed)]))
-			data->py -= data->dirY * movespeed * 0.5;
+			data->py -= data->diry * movespeed * 0.5;
 	}
 	move2(key, data);
 }
@@ -77,24 +77,24 @@ void	rotate(int key, data_t *data, double rotspeed)
 
 	if (key == KEY_FD)
 	{
-		olddirx = data->dirX;
-		data->dirX = data->dirX * cos(-rotspeed) - data->dirY * sin(-rotspeed);
-		data->dirY = olddirx * sin(-rotspeed) + data->dirY * cos(-rotspeed);
-		oldplanex = data->planeX;
-		data->planeX = data->planeX * cos(-rotspeed) -
-			data->planeY * sin(-rotspeed);
-		data->planeY = oldplanex * sin(-rotspeed) +
-			data->planeY * cos(-rotspeed);
+		olddirx = data->dirx;
+		data->dirx = data->dirx * cos(-rotspeed) - data->diry * sin(-rotspeed);
+		data->diry = olddirx * sin(-rotspeed) + data->diry * cos(-rotspeed);
+		oldplanex = data->planex;
+		data->planex = data->planex * cos(-rotspeed) -
+			data->planey * sin(-rotspeed);
+		data->planey = oldplanex * sin(-rotspeed) +
+			data->planey * cos(-rotspeed);
 	}
 	if (key == KEY_FG)
 	{
-		olddirx = data->dirX;
-		data->dirX = data->dirX * cos(rotspeed) - data->dirY * sin(rotspeed);
-		data->dirY = olddirx * sin(rotspeed) + data->dirY * cos(rotspeed);
-		oldplanex = data->planeX;
-		data->planeX = data->planeX * cos(rotspeed) -
-			data->planeY * sin(rotspeed);
-		data->planeY = oldplanex * sin(rotspeed) + data->planeY * cos(rotspeed);
+		olddirx = data->dirx;
+		data->dirx = data->dirx * cos(rotspeed) - data->diry * sin(rotspeed);
+		data->diry = olddirx * sin(rotspeed) + data->diry * cos(rotspeed);
+		oldplanex = data->planex;
+		data->planex = data->planex * cos(rotspeed) -
+			data->planey * sin(rotspeed);
+		data->planey = oldplanex * sin(rotspeed) + data->planey * cos(rotspeed);
 	}
 }
 

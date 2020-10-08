@@ -48,13 +48,13 @@ void	ft_algo(struct data_s data, int *img_data2,
 		algo(&data, pix);
 		algo2(&data);
 		data.walldir = ft_walldir(data);
-		while (data.y2 < data.drawEnd)
+		while (data.y2 < data.drawend)
 		{
-			zo = data.texPos;
+			zo = data.texpos;
 			texy = zo;
-			data.texPos += data.step;
+			data.texpos += data.step;
 			color = data.text.texture[data.walldir][0][texheight
-		* texy + data.texX];
+		* texy + data.texx];
 			img_data2[data.y2 * data.x + pix] = color;
 			data.y2++;
 		}

@@ -38,15 +38,15 @@ void	init_ray(struct data_s *data)
 	data->y = 0;
 	data->px = 0;
 	data->py = 0;
-	data->dirX = -1;
-	data->dirY = 0;
+	data->dirx = -1;
+	data->diry = 0;
 	data->mapx = 0;
 	data->size_free = 0;
 	data->mapy = 0;
 	data->px = 0;
 	data->py = 0;
-	data->planeX = 0;
-	data->planeY = 0.66;
+	data->planex = 0;
+	data->planey = 0.66;
 	data->mapx = 0;
 	data->mapy = 0;
 	data->sidedirx = 0;
@@ -54,27 +54,30 @@ void	init_ray(struct data_s *data)
 	data->side = 0;
 	data->stepx = 0;
 	data->y2 = 0;
-	data->texPos = 0;
+	data->texpos = 0;
 	data->stepy = 0;
 	data->count = 0;
 }
 
-void	cubsave(struct data_s *data)
+void    cubsave(struct data_s *data)
 {
-	if ((data->mlx_ptr = mlx_init(&data)) == NULL)
-		ft_error("window error", data);
-	if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
-					data->x, data->y, "Cubd3d")) == NULL)
-		textures(data);
-	save_bmp(*data);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+        if ((data->mlx_ptr = mlx_init(&data)) == NULL)
+                ft_error("window error", data);
+        if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
+                                        data->x, data->y, "Cubd3d")) == NULL)
+                textures(data);
+        save_bmp(*data);
+        mlx_clear_window(data->mlx_ptr, data->win_ptr);
+        mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 }
+
 
 void	cubd3d(struct data_s *data, char **argv, int argc)
 {
-	if (argc == 3 && !ft_strncmp(argv[1], "--save", 6))
+	if (argc == 2 && !ft_strncmp(argv[1], "--save", 6))
+	{
 		cubsave(data);
+	}
 	else
 	{
 		if (data->x > 2580)
@@ -84,8 +87,8 @@ void	cubd3d(struct data_s *data, char **argv, int argc)
 		if ((data->mlx_ptr = mlx_init(&data)) == NULL)
 			ft_error("window error", data);
 		if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
-						data->x, data->y, "Cubd3d")) == NULL)
-			ft_error("window error", data);
+			data->x, data->y, "Cubd3d"))== NULL)
+		ft_error("window error", data);
 		textures(data);
 		deal_key_map(112, data);
 		mlx_hook(data->win_ptr, 2, (1L << 0), &deal_key_map, data);
