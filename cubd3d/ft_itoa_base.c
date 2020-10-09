@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int		ft_subtext2(char *line, data_t *data)
+int		ft_subtext2(char *line, t_data *data)
 {
 	int i;
 	int z;

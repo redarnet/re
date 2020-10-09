@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	algobis(data_t *data)
+void	algobis(t_data *data)
 {
 	int hit;
 
@@ -36,7 +36,7 @@ void	algobis(data_t *data)
 	}
 }
 
-void	algobis2(data_t *data)
+void	algobis2(t_data *data)
 {
 	if (data->raydirx < 0)
 	{
@@ -60,7 +60,7 @@ void	algobis2(data_t *data)
 	}
 }
 
-void	algo(data_t *data, int pix)
+void	algo(t_data *data, int pix)
 {
 	double	camerax;
 

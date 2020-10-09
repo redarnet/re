@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	plafond(data_t *img, data_t *data)
+void	plafond(t_data *img, t_data *data)
 {
 	int i;
 	int y;
@@ -31,7 +31,7 @@ void	plafond(data_t *img, data_t *data)
 	}
 }
 
-void	sol(data_t *img, data_t *data)
+void	sol(t_data *img, t_data *data)
 {
 	int i;
 	int y;

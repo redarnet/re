@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	ft_error(char *str, data_t *data)
+void	ft_error(char *str, t_data *data)
 {
 	ft_putstr_fd(str, 1);
 	ft_putstr_fd("Error\n", 1);

@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	ft_check2_bis(data_t *data, char c, int x, int y)
+void	ft_check2_bis(t_data *data, char c, int x, int y)
 {
 	int x1;
 	int y1;
@@ -32,7 +32,7 @@ void	ft_check2_bis(data_t *data, char c, int x, int y)
 	}
 }
 
-void	ft_check2(data_t *data, char c, int x, int y)
+void	ft_check2(t_data *data, char c, int x, int y)
 {
 	int x1;
 	int y1;
@@ -53,7 +53,7 @@ void	ft_check2(data_t *data, char c, int x, int y)
 	ft_check2_bis(data, data->map[y][x], x, y);
 }
 
-void	ft_check(data_t *data, char c, int x, int y)
+void	ft_check(t_data *data, char c, int x, int y)
 {
 	int x1;
 
@@ -79,7 +79,7 @@ void	ft_check(data_t *data, char c, int x, int y)
 	ft_check2(data, c, x, y);
 }
 
-void	checkmap2(data_t *data)
+void	checkmap2(t_data *data)
 {
 	int x;
 	int y;
@@ -107,7 +107,7 @@ void	checkmap2(data_t *data)
 	}
 }
 
-int		start_map(struct data_s data)
+int		start_map(struct s_data data)
 {
 	int x;
 	int y;

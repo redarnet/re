@@ -36,7 +36,7 @@ int		*sortsprites2(int *sprite_order, double *sprite_distance, int sprite_nb)
 	return (sprite_order);
 }
 
-int		*sortsprites(struct data_s data, int *sprite_order,
+int		*sortsprites(struct s_data data, int *sprite_order,
 	int sprite_nb)
 {
 	int			i;
@@ -55,7 +55,7 @@ int		*sortsprites(struct data_s data, int *sprite_order,
 	return (sprite_order);
 }
 
-void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
+void	ft_sprite2(struct s_data data, struct s_sprite sprite, int *img_data2)
 {
 	int y;
 	int d;
@@ -84,7 +84,7 @@ void	ft_sprite2(struct data_s data, struct sprite_s sprite, int *img_data2)
 	}
 }
 
-void	ft_sprite1(struct data_s data, struct sprite_s *sprite)
+void	ft_sprite1(struct s_data data, struct s_sprite *sprite)
 {
 	sprite->spriteheight = abss((int)((data.y / (sprite->transformy))));
 	sprite->drawstarty = -sprite->spriteheight / 2 + data.y / 2;
@@ -103,11 +103,11 @@ void	ft_sprite1(struct data_s data, struct sprite_s *sprite)
 	sprite->stripe = sprite->drawstartx;
 }
 
-void	ft_sprite(struct data_s data, int *img_data2)
+void	ft_sprite(struct s_data data, int *img_data2)
 {
 	int				i;
 	int				*spriteorder;
-	struct sprite_s	sprite;
+	struct s_sprite	sprite;
 
 	spriteorder = (int*)malloc(sizeof(int) * data.numsprite);
 	spriteorder = sortsprites(data, spriteorder,

@@ -19,7 +19,7 @@ int		move_pos(int pos)
 	return (1);
 }
 
-void	move2(int key, data_t *data)
+void	move2(int key, t_data *data)
 {
 	double movespeed;
 
@@ -44,7 +44,7 @@ void	move2(int key, data_t *data)
 	}
 }
 
-void	move(int key, data_t *data)
+void	move(int key, t_data *data)
 {
 	double movespeed;
 
@@ -70,7 +70,7 @@ void	move(int key, data_t *data)
 	move2(key, data);
 }
 
-void	rotate(int key, data_t *data, double rotspeed)
+void	rotate(int key, t_data *data, double rotspeed)
 {
 	double olddirx;
 	double oldplanex;
@@ -98,7 +98,7 @@ void	rotate(int key, data_t *data, double rotspeed)
 	}
 }
 
-int		deal_key_map(int key, data_t *data)
+int		deal_key_map(int key, t_data *data)
 {
 	double rotspeed;
 

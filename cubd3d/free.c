@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	ft_free_map(int **map, data_t *data)
+void	ft_free_map(int **map, t_data *data)
 {
 	int x;
 

@@ -27,7 +27,7 @@ int		ft_atoi2(char *str)
 	return (x);
 }
 
-int		rgb_hex(int red, int green, int blue, data_t *data)
+int		rgb_hex(int red, int green, int blue, t_data *data)
 {
 	char	*red2;
 	char	*green2;
@@ -54,7 +54,7 @@ int		rgb_hex(int red, int green, int blue, data_t *data)
 	return (data->couleur1);
 }
 
-int		parse_s_p2(char *line, data_t *data)
+int		parse_s_p2(char *line, t_data *data)
 {
 	int i;
 
@@ -77,7 +77,7 @@ int		parse_s_p2(char *line, data_t *data)
 	return (i);
 }
 
-int		parse_s_p(char *line, data_t *data)
+int		parse_s_p(char *line, t_data *data)
 {
 	int i;
 	int blue;

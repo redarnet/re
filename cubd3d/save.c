@@ -41,7 +41,7 @@ void		write_file(int fd, t_bmp bmp)
 	}
 }
 
-t_bmp		init_bmp(struct data_s *data)
+t_bmp		init_bmp(struct s_data *data)
 {
 	t_bmp bmp;
 
@@ -61,11 +61,11 @@ t_bmp		init_bmp(struct data_s *data)
 	return (bmp);
 }
 
-void		save_bmp(struct data_s data)
+void		save_bmp(struct s_data data)
 {
 	int		fd;
 	int		texheight;
-	data_t	*img;
+	t_data	*img;
 	t_bmp	bmp;
 
 	texheight = 64;

@@ -12,26 +12,14 @@
 
 #include "cub3d.h"
 
-int		ft_quit(data_t *data)
+int		ft_quit(t_data *data)
 {
-	int i;
 
-	i = 0;
-	while (i != 4)
-	{
-		if (data->text_nord[i])
-			free(data->text_nord[i]);
-		i++;
-	}
-	if (data->sprite)
-		free(data->sprite);
-	if (data->map2)
-		ft_free_map(data->map2, data);
 	exit(5);
 	return (0);
 }
 
-void	init_ray(struct data_s *data)
+void	init_ray(struct s_data *data)
 {
 	data->map = NULL;
 	data->x = 0;
@@ -57,29 +45,23 @@ void	init_ray(struct data_s *data)
 	data->texpos = 0;
 	data->stepy = 0;
 	data->count = 0;
-	data->red = 0;
-	data->green = 0;
 }
 
-void    cubsave(struct data_s *data)
+void	cubsave(struct s_data *data)
 {
-        if ((data->mlx_ptr = mlx_init(&data)) == NULL)
-                ft_error("window error", data);
-        if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
-                                        data->x, data->y, "Cubd3d")) == NULL)
-                textures(data);
-        save_bmp(*data);
-        mlx_clear_window(data->mlx_ptr, data->win_ptr);
-        mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if ((data->mlx_ptr = mlx_init(&data)) == NULL)
+		ft_error("window error", data);
+	if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
+		data->x, data->y, "Cubd3d")) == NULL)
+		ft_error("window error", data);
+	textures(data);
+	save_bmp(*data);
 }
 
-
-void	cubd3d(struct data_s *data, char **argv, int argc)
+void	cubd3d(struct s_data *data, char **argv, int argc)
 {
-	if (argc == 2 && !ft_strncmp(argv[1], "--save", 6))
-	{
+	if (argc == 3 && !ft_strncmp(argv[2], "--save", 6))
 		cubsave(data);
-	}
 	else
 	{
 		if (data->x > 2580)
@@ -89,12 +71,13 @@ void	cubd3d(struct data_s *data, char **argv, int argc)
 		if ((data->mlx_ptr = mlx_init(&data)) == NULL)
 			ft_error("window error", data);
 		if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
-			data->x, data->y, "Cubd3d"))== NULL)
-		ft_error("window error", data);
+						data->x, data->y, "Cubd3d")) == NULL)
+			ft_error("window error", data);
 		textures(data);
 		deal_key_map(112, data);
+		save_bmp(*data);
+		mlx_hook(data->win_ptr, 17,(1L << 17), ft_quit, &data);
 		mlx_hook(data->win_ptr, 2, (1L << 0), &deal_key_map, data);
-		mlx_hook(data->win_ptr, 17, (1L << 7), ft_quit, &data);
 		mlx_loop(data->mlx_ptr);
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
@@ -105,7 +88,7 @@ void	cubd3d(struct data_s *data, char **argv, int argc)
 
 int		main(int argc, char **argv)
 {
-	data_t	data;
+	t_data	data;
 	char	**str;
 
 	init_ray(&data);

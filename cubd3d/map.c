@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	rotate_start(struct data_s *data, char c)
+void	rotate_start(struct s_data *data, char c)
 {
 	double rotspeed;
 	double olddirx;
@@ -35,7 +35,7 @@ void	rotate_start(struct data_s *data, char c)
 		data->planey * cos(-rotspeed);
 }
 
-void	pos_perso(struct data_s *data)
+void	pos_perso(struct s_data *data)
 {
 	int x;
 	int y;
@@ -86,7 +86,7 @@ int		**change_map2(char **map, int **str, int count, int i)
 	return (str);
 }
 
-int		**change_map(char **map, int count, data_t *data)
+int		**change_map(char **map, int count, t_data *data)
 {
 	int i;
 	int **str;

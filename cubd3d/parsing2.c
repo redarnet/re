@@ -34,7 +34,7 @@ void	ft_double_start(char **str, char c)
 	}
 }
 
-int		first_letter(char c, int count, int i, data_t *data)
+int		first_letter(char c, int count, int i, t_data *data)
 {
 	if ((c == 'N' || c == 'R' || c == 'S' || c == 'W' || c == 'E'
 		|| c == 'F' || c == 'C') && i == 0)
@@ -50,7 +50,7 @@ int		first_letter(char c, int count, int i, data_t *data)
 	return (0);
 }
 
-void	ft_syntaxe(char **str, data_t *data)
+void	ft_syntaxe(char **str, t_data *data)
 {
 	int y;
 	int i;
@@ -75,7 +75,7 @@ void	ft_syntaxe(char **str, data_t *data)
 	}
 }
 
-void	ft_check_pars(char **str, data_t *data)
+void	ft_check_pars(char **str, t_data *data)
 {
 	ft_double_start(str, 'R');
 	ft_double_start(str, 'W');
@@ -85,7 +85,7 @@ void	ft_check_pars(char **str, data_t *data)
 	ft_syntaxe(str, data);
 }
 
-int		split(char *line, int *y, data_t *data, int nb)
+int		split(char *line, int *y, t_data *data, int nb)
 {
 	int	i;
 

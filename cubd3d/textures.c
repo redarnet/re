@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	tex_sprite(data_t *data)
+void	tex_sprite(t_data *data)
 {
 	int	i;
 	int	y;
@@ -20,26 +20,26 @@ void	tex_sprite(data_t *data)
 
 	y = data->count2;
 	z = 0;
-	data->sprite = (sprite_t*)malloc(sizeof(sprite_t) * data->numsprite + 1);
+	data->sprite = (t_sprite*)malloc(sizeof(t_sprite) * data->numsprite + 1);
 	while (data->map[y] != 0)
 	{
 		i = 0;
 		while (data->map[y][i] != '\0')
 		{
-				if (data->map[y][i] == '2')
-				{
-					data->sprite[z].posy = y - data->count2 + 1.5;
-					data->sprite[z].posx = i + 1.5;
-					data->map[y][i] = '0';
-					z++;
-				}
+			if (data->map[y][i] == '2')
+			{
+				data->sprite[z].posy = y - data->count2 + 1.5;
+				data->sprite[z].posx = i + 1.5;
+				data->map[y][i] = '0';
+				z++;
+			}
 			i++;
 		}
 		y++;
 	}
 }
 
-void	lmlx_free_t_img(data_t *data)
+void	lmlx_free_t_img(t_data *data)
 {
 	if (data)
 	{
@@ -48,16 +48,16 @@ void	lmlx_free_t_img(data_t *data)
 	}
 }
 
-data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
+t_data	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
 {
-	data_t	*new;
+	t_data	*new;
 	void	*temp;
 	int		bpp;
 	int		endian;
 
 	bpp = 32;
 	endian = 1;
-	new = (data_t*)malloc(sizeof(data_t));
+	new = (t_data*)malloc(sizeof(t_data));
 	new->mlx_ptr = mlx_ptr;
 	new->win_ptr = NULL;
 	new->x = 0;
@@ -70,13 +70,13 @@ data_t	*lmlx_xpm_to_img(void *mlx_ptr, char *path)
 	}
 	new->img_ptr = temp;
 	new->img_data = (int*)mlx_get_data_addr(temp,
-		&new->bpp, &new->size_l, &endian);
+			&new->bpp, &new->size_l, &endian);
 	new->text.ptr = mlx_get_data_addr(temp,
 			&new->bpp, &new->size_l, &endian);
 	return (new);
 }
 
-t_t	textures_bis(data_t *img, data_t *data)
+t_t		textures_bis(t_data *img, t_data *data)
 {
 	int l;
 	int y;
@@ -85,16 +85,16 @@ t_t	textures_bis(data_t *img, data_t *data)
 	while (y != 64)
 	{
 		l = *(int*)(img->text.ptr + img->size_l *
-			data->text.x + img->bpp / 8 * y);
+				data->text.x + img->bpp / 8 * y);
 		data->text.texture[data->text.i][data->text.x][y] = l;
 		y++;
 	}
 	return (data->text);
 }
 
-void	textures(data_t *data)
+void	textures(t_data *data)
 {
-	data_t	*img;
+	t_data	*img;
 
 	data->text.i = 0;
 	while (data->text.i != 5)

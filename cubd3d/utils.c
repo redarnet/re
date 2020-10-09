@@ -65,7 +65,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (str);
 }
 
-int		ft_strsub_bis(char *line, data_t *data)
+int		ft_strsub_bis(char *line, t_data *data)
 {
 	int i;
 

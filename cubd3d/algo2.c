@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-double	algo2bis(data_t *data)
+double	algo2bis(t_data *data)
 {
 	double wallx;
 
@@ -23,7 +23,7 @@ double	algo2bis(data_t *data)
 	return (wallx);
 }
 
-void	algo2(data_t *data)
+void	algo2(t_data *data)
 {
 	int		lineheight;
 	int		drawstart;

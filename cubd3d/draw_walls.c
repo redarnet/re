@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int		ft_walldir(struct data_s data)
+int		ft_walldir(struct s_data data)
 {
 	int walldir;
 
@@ -33,7 +33,7 @@ int		ft_walldir(struct data_s data)
 	return (walldir);
 }
 
-void	ft_algo(struct data_s data, int *img_data2,
+void	ft_algo(struct s_data data, int *img_data2,
 		int texheight, double *zbuffer)
 {
 	int		pix;
@@ -63,16 +63,16 @@ void	ft_algo(struct data_s data, int *img_data2,
 	}
 }
 
-data_t	*lmlx_new_image(void *mlx_ptr, void *win_ptr, int width, int height)
+t_data	*lmlx_new_image(void *mlx_ptr, void *win_ptr, int width, int height)
 {
-	data_t	*new;
+	t_data	*new;
 	int		trsh;
 	int		bpp;
 	int		endian;
 
 	bpp = 32;
 	endian = 1;
-	if (!(new = (data_t*)malloc(sizeof(data_t))))
+	if (!(new = (t_data*)malloc(sizeof(t_data))))
 		return (NULL);
 	new->x = width;
 	new->y = height;
@@ -87,16 +87,16 @@ data_t	*lmlx_new_image(void *mlx_ptr, void *win_ptr, int width, int height)
 	return (new);
 }
 
-void	lmlx_destroy_image(data_t *img)
+void	lmlx_destroy_image(t_data *img)
 {
 	mlx_destroy_image(img->mlx_ptr, img->img_ptr);
 	free(img);
 }
 
-void	ft_draw_walls(struct data_s data)
+void	ft_draw_walls(struct s_data data)
 {
 	int		texheight;
-	data_t	*img;
+	t_data	*img;
 
 	img = lmlx_new_image(data.mlx_ptr, data.win_ptr, data.x, data.y);
 	texheight = 64;
